@@ -93,12 +93,12 @@ public class Gameplay : MonoBehaviour
     private IEnumerator CoroutineNotMatched()
     {
         for (int i = 0; i < _count_arr; i++)
-            arr[i].GetComponent<Animator>().SetBool(KeyAnim.KeyTileMatch, true);
+            arr[i].GetComponent<Animator>().SetBool(KeyAnim.KEY_TILE_MATCH, true);
 
         yield return new WaitForSeconds(1f);
 
         for (int i = 0; i < _count_arr; i++)
-            arr[i].GetComponent<Animator>().SetBool(KeyAnim.KeyTileMatch, false);
+            arr[i].GetComponent<Animator>().SetBool(KeyAnim.KEY_TILE_MATCH, false);
 
         for (int i = 0; i < _count_arr; i++)
         {

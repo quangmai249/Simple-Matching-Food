@@ -4,5 +4,6 @@ public enum EnumPanelType
     Settings,
     Pause,
     HUD,
-    GameOver
+    GameOver,
+    Information
 }
