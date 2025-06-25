@@ -1,6 +1,7 @@
 using Assets.Scrips.Manager;
 using DG.Tweening;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,6 +15,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     private bool _isMatched;
     private bool _isChecking;
 
+    private RectTransform _rt;
     private Gameplay gameplay;
 
     private void Start()
@@ -21,6 +23,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         _img = GetComponent<Image>();
         gameplay = GameObject.FindGameObjectWithTag(TagName.TAG_GAMEPLAY).GetComponent<Gameplay>();
         this.SetDefault();
+
+        _rt = transform as RectTransform;
     }
 
     private void OnDisable()
@@ -40,20 +44,20 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     {
         if (_isFlipped)
         {
-            transform.DOScaleX(0f, 0.15f).SetEase(Ease.InQuad).OnComplete(() =>
+            _rt.DOScaleX(0f, 0.15f).SetEase(Ease.InOutSine).SetUpdate(true).OnComplete(() =>
             {
-                transform.DOScaleX(1f, 0.15f).SetEase(Ease.OutQuad);
-
                 _img.sprite = _frontImg;
+
+                _rt.DOScaleX(1f, 0.15f).SetEase(Ease.InOutSine).SetUpdate(true);
             });
         }
         else
         {
-            transform.DOScaleX(0f, 0.15f).SetEase(Ease.InQuad).OnComplete(() =>
+            _rt.DOScaleX(0f, 0.15f).SetEase(Ease.InOutSine).SetUpdate(true).OnComplete(() =>
             {
-                transform.DOScaleX(1f, 0.15f).SetEase(Ease.OutQuad);
-
                 _img.sprite = _backImg;
+
+                _rt.DOScaleX(1f, 0.15f).SetEase(Ease.InOutSine).SetUpdate(true);
             });
         }
     }
@@ -66,7 +70,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         _isChecking = true;
 
         _isFlipped = !_isFlipped;
-        Flip();
+        this.Flip();
         GameEvents.OnTileSelected.Raise(this);
     }
 

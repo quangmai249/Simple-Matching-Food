@@ -9,6 +9,7 @@ TagManager:
   - TileSpawner
   - Gameplay
   - GridTileGroup
+  - PanelRoot
   layers:
   - Default
   - TransparentFX

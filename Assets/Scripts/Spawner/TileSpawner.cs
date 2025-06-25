@@ -31,8 +31,6 @@ public class TileSpawner : MonoBehaviour
 
         this.SetRandomTileLevel();
         this.SpawnTile();
-
-        Debug.Log($"Count after OnSpawn {TilePool.Instance.name} : {TilePool.Instance.gameObject.transform.childCount}");
     }
 
     private void SetRandomTileLevel()

@@ -12,7 +12,9 @@ public class Gameplay : MonoBehaviour
     [SerializeField] int _countMatching = 2;
     [SerializeField] int _countTileMatched;
 
-    private List<Tile> lsTile = new List<Tile>();
+    private int _count_arr;
+    private Tile[] arr = new Tile[10];
+
     private TileSpawner tileSpawner;
     private GameObject _gridTileGroup;
 
@@ -25,6 +27,7 @@ public class Gameplay : MonoBehaviour
     private void Start()
     {
         this.SetDefault();
+        UIManager.instance.ShowPanel(EnumPanelType.HUD);
     }
 
     private void OnEnable()
@@ -39,100 +42,72 @@ public class Gameplay : MonoBehaviour
 
     private void Selected(Tile tile)
     {
-        lsTile.Add(tile);
+        arr[_count_arr] = tile;
+        _count_arr++;
 
-        if (lsTile.Count == _countMatching)
+        if (_count_arr == _countMatching)
         {
             _isChecking = true;
 
             if (IsMatching(_countMatching))
-                StartCoroutine(nameof(this.CoroutineMatched));
+                this.Matched();
             else
                 StartCoroutine(nameof(this.CoroutineNotMatched));
         }
     }
 
-    private IEnumerator CoroutineMatched()
+    private void Matched()
     {
-        yield return null;
-
-        lsTile.ForEach(t =>
+        for (int i = 0; i < _count_arr; i++)
         {
-            t.IsMatched = true;
-            t.GetComponent<Image>().color = new Color(1, 1, 1, .25f);
-        });
+            arr[i].IsMatched = true;
+            arr[i].GetComponent<Image>().color = new Color(1, 1, 1, .15f);
+        }
 
-        lsTile.Clear();
+        _count_arr = 0;
 
         _isChecking = false;
 
         _countTileMatched += _countMatching;
 
-        if (IsWinGame())
-        {
-            yield return new WaitForSeconds(3f);
-            this.DisableAllTilesMatched();
-            yield return new WaitForSeconds(1f);
-            this.LoadNextLevel();
-        }
-    }
-
-    private bool IsWinGame()
-    {
         if (_countTileMatched == tileSpawner.MaxTile)
-        {
-            foreach (GameObject item in GameObject.FindGameObjectsWithTag(TagName.TAG_TILE))
-                item.GetComponent<Image>().color = new Color(1, 1, 1, 1);
-
-            _gridTileGroup.transform
-                .DOScale(1.25f, 0.25f)
-                .SetLoops(2, LoopType.Yoyo)
-                .SetEase(Ease.InOutQuad);
-
-            return true;
-        }
-
-        return false;
+            StartCoroutine(nameof(this.CheckWinGame));
     }
 
-    private void LoadNextLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    private void DisableAllTilesMatched()
+    private IEnumerator CheckWinGame()
     {
         foreach (GameObject item in GameObject.FindGameObjectsWithTag(TagName.TAG_TILE))
-        {
-            item.GetComponent<Tile>().SetDefault();
-            TilePool.Instance.Pool.ReturnToPool(item, TilePool.Instance.gameObject);
-        }
+            item.GetComponent<Image>().color = new Color(1, 1, 1, 1);
 
-        Debug.Log($"Count after return {TilePool.Instance.name} : {TilePool.Instance.gameObject.transform.childCount}");
+        yield return new WaitForSeconds(.5f);
+
+        _gridTileGroup.transform
+            .DOScale(1.25f, 0.25f)
+            .SetLoops(2, LoopType.Yoyo)
+            .SetEase(Ease.InOutQuad);
+
+        yield return
+            StartCoroutine(GameManager.Instance.RestartGame(3, 1));
     }
 
     private IEnumerator CoroutineNotMatched()
     {
-        lsTile.ForEach(t =>
-        {
-            t.GetComponent<Animator>().SetBool(KeyAnim.KeyTileMatch, true);
-        });
+        for (int i = 0; i < _count_arr; i++)
+            arr[i].GetComponent<Animator>().SetBool(KeyAnim.KeyTileMatch, true);
 
         yield return new WaitForSeconds(1f);
 
-        lsTile.ForEach(t =>
-        {
-            t.GetComponent<Animator>().SetBool(KeyAnim.KeyTileMatch, false);
-        });
+        for (int i = 0; i < _count_arr; i++)
+            arr[i].GetComponent<Animator>().SetBool(KeyAnim.KeyTileMatch, false);
 
-        foreach (Tile t in lsTile)
+        for (int i = 0; i < _count_arr; i++)
         {
-            t.IsFlipped = false;
-            t.Flip();
-            t.IsChecking = false;
+            arr[i].IsFlipped = false;
+            arr[i].Flip();
+            arr[i].IsChecking = false;
         }
 
-        lsTile.Clear();
+        _count_arr = 0;
 
         yield return new WaitForSeconds(.25f);
 
@@ -147,12 +122,10 @@ public class Gameplay : MonoBehaviour
 
     private bool IsMatching(int countTileMatching)
     {
-        Sprite t = lsTile[0].GetFrontImg();
-
-        for (int i = 1; i < lsTile.Count; i++)
-            if (lsTile[i].GetFrontImg() != t)
+        Sprite t = arr[0].GetFrontImg();
+        for (int i = 1; i < countTileMatching; i++)
+            if (t != arr[i].GetFrontImg())
                 return false;
-
         return true;
     }
 
