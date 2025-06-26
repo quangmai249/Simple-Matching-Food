@@ -10,6 +10,7 @@ public class TileSpawner : MonoBehaviour
 {
     [SerializeField] List<Sprite> lsBackImg = new List<Sprite>();
     [SerializeField] List<Sprite> lsFrontImg = new List<Sprite>();
+    [SerializeField] List<Sprite> lsFrontImg2 = new List<Sprite>();
 
     private int _row, _col, _maxTile, _maxSprite;
 
@@ -35,8 +36,8 @@ public class TileSpawner : MonoBehaviour
 
     private void SetRandomTileLevel()
     {
-        _col = Random.Range(2, 8);
-        _row = Random.Range(2, 8);
+        _col = Random.Range(2, 7);
+        _row = Random.Range(2, 11);
 
         if (_col % 2 != 0)
             _col++;
@@ -50,7 +51,7 @@ public class TileSpawner : MonoBehaviour
 
         while (hashSet.Count < _maxSprite)
         {
-            hashSet.Add(Random.Range(0, lsFrontImg.Count - 1));
+            hashSet.Add(Random.Range(0, lsFrontImg2.Count - 1));
         }
 
         hashSet.CopyTo(arr);
@@ -91,7 +92,7 @@ public class TileSpawner : MonoBehaviour
     private void SetSpriteImageTile()
     {
         _tile.GetComponent<Tile>().SetBackImg(lsBackImg[0]);
-        _tile.GetComponent<Tile>().SetFrontImg(lsFrontImg[queue.Dequeue()]);
+        _tile.GetComponent<Tile>().SetFrontImg(lsFrontImg2[queue.Dequeue()]);
     }
 
     private void ReponsiveGrid(int columns, int rows)

@@ -1,4 +1,5 @@
 using Assets.Scrips.Manager;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,14 +9,21 @@ public class PanelMainMenu : MonoBehaviour
     [SerializeField] Button _btnList;
     [SerializeField] Button _btnStart;
     [SerializeField] Button _btnInformation;
+    [SerializeField] Button _btnExit;
 
     [SerializeField] GameObject _panelMainMenu;
 
     private void Awake()
     {
+        _btnExit.onClick.AddListener(Exit);
         _btnStart.onClick.AddListener(StartGame);
         _btnList.onClick.AddListener(ListMainMenu);
         _btnInformation.onClick.AddListener(Information);
+    }
+
+    private void Exit()
+    {
+        UIManager.instance.ShowPanel(EnumPanelType.Exit);
     }
 
     private void Start()
@@ -33,7 +41,12 @@ public class PanelMainMenu : MonoBehaviour
         _panelMainMenu.SetActive(!_panelMainMenu.activeSelf);
 
         if (_panelMainMenu.activeSelf)
+        {
             _panelMainMenu.GetComponent<Animator>().Play(KeyAnim.KEY_TRANSLATE_PANEL_LIST);
+            _btnList.image.color = new Color(1, 1, 1, .25f);
+        }
+        else
+            _btnList.image.color = new Color(1, 1, 1, 1);
     }
 
     private void StartGame()
