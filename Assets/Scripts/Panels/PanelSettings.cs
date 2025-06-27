@@ -1,8 +1,10 @@
 using Assets.Scrips.Manager;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class PanelSettings : MonoBehaviour
@@ -22,6 +24,11 @@ public class PanelSettings : MonoBehaviour
         _btnCancel.onClick.AddListener(Cancel);
         _btnConfirm.onClick.AddListener(Confirm);
         this.Register();
+    }
+
+    private IEnumerator Start()
+    {
+        yield return LocalizationSettings.InitializationOperation;
     }
 
     private void Register()
@@ -55,6 +62,10 @@ public class PanelSettings : MonoBehaviour
 
         if (dataSetting != null)
         {
+            Debug.Log((int)dataSetting.enumLanguages);
+
+            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)dataSetting.enumLanguages];
+
             SFXSlider.value = dataSetting.sfx;
             MusicSlider.value = dataSetting.music;
 

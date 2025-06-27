@@ -14,6 +14,10 @@ public class SaveManager : Singleton<SaveManager>
     public DataSetting GetDataSetting()
     {
         DataSetting dataSetting = JsonUtility.FromJson<DataSetting>(PlayerPrefs.GetString(KeyData.DATA_SETTING));
+
+        if (dataSetting == null)
+            return new DataSetting(.5f, .5f, EnumLanguages.English);
+
         return dataSetting;
     }
 
