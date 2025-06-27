@@ -10,6 +10,7 @@ public class PanelMainMenu : MonoBehaviour
     [SerializeField] Button _btnStart;
     [SerializeField] Button _btnInformation;
     [SerializeField] Button _btnExit;
+    [SerializeField] Button _btnSettings;
 
     [SerializeField] GameObject _panelMainMenu;
 
@@ -18,7 +19,14 @@ public class PanelMainMenu : MonoBehaviour
         _btnExit.onClick.AddListener(Exit);
         _btnStart.onClick.AddListener(StartGame);
         _btnList.onClick.AddListener(ListMainMenu);
+        _btnSettings.onClick.AddListener(Settings);
+
         _btnInformation.onClick.AddListener(Information);
+    }
+
+    private void Settings()
+    {
+        UIManager.instance.ShowPanel(EnumPanelType.Settings);
     }
 
     private void Exit()
