@@ -59,6 +59,8 @@ public class PanelMainMenu : MonoBehaviour
 
     private void StartGame()
     {
+        UIManager.instance.ShowPanel(EnumPanelType.MainMenu);
+
         SceneManager.LoadScene(SceneName.SCENE_GAMEPLAY);
     }
 }

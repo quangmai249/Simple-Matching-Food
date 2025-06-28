@@ -50,14 +50,20 @@ public class Gameplay : MonoBehaviour
             _isChecking = true;
 
             if (IsMatching(_countMatching))
-                this.Matched();
+            {
+                StartCoroutine(nameof(this.CoroutineMatched));
+            }
             else
+            {
                 StartCoroutine(nameof(this.CoroutineNotMatched));
+            }
         }
     }
 
-    private void Matched()
+    private IEnumerator CoroutineMatched()
     {
+        AudioManager.Instance.TileMatched();
+
         for (int i = 0; i < _count_arr; i++)
         {
             arr[i].IsMatched = true;
@@ -71,7 +77,7 @@ public class Gameplay : MonoBehaviour
         _countTileMatched += _countMatching;
 
         if (_countTileMatched == tileSpawner.MaxTile)
-            StartCoroutine(nameof(this.CheckWinGame));
+            yield return StartCoroutine(nameof(this.CheckWinGame));
     }
 
     private IEnumerator CheckWinGame()
@@ -92,13 +98,7 @@ public class Gameplay : MonoBehaviour
 
     private IEnumerator CoroutineNotMatched()
     {
-        for (int i = 0; i < _count_arr; i++)
-            arr[i].GetComponent<Animator>().SetBool(KeyAnim.KEY_TILE_MATCH, true);
-
-        yield return new WaitForSeconds(1f);
-
-        for (int i = 0; i < _count_arr; i++)
-            arr[i].GetComponent<Animator>().SetBool(KeyAnim.KEY_TILE_MATCH, false);
+        yield return StartCoroutine(nameof(CoroutineShakeTile), 1f);
 
         for (int i = 0; i < _count_arr; i++)
         {
@@ -107,11 +107,25 @@ public class Gameplay : MonoBehaviour
             arr[i].IsChecking = false;
         }
 
+        AudioManager.Instance.TileNotMatched();
+
         _count_arr = 0;
 
         yield return new WaitForSeconds(.25f);
 
         _isChecking = false;
+    }
+
+    private IEnumerator CoroutineShakeTile(float timeShake)
+    {
+        for (int i = 0; i < _count_arr; i++)
+            arr[i].GetComponent<Animator>().SetBool(KeyAnim.KEY_TILE_MATCH, true);
+
+        yield return new WaitForSeconds(timeShake);
+
+        for (int i = 0; i < _count_arr; i++)
+            arr[i].GetComponent<Animator>().SetBool(KeyAnim.KEY_TILE_MATCH, false);
+
     }
 
     private void SetDefault()

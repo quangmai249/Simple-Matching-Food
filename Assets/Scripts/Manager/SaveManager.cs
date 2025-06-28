@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class SaveManager : Singleton<SaveManager>
@@ -9,6 +11,22 @@ public class SaveManager : Singleton<SaveManager>
     protected override void Awake()
     {
         base.Awake();
+    }
+
+    private IEnumerator Start()
+    {
+        yield return LocalizationSettings.InitializationOperation;
+    }
+
+    public void ChangeLanguage()
+    {
+        if (this.GetDataSetting() != null)
+        {
+            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)this.GetDataSetting().enumLanguages];
+            return;
+        }
+
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[0];
     }
 
     public DataSetting GetDataSetting()

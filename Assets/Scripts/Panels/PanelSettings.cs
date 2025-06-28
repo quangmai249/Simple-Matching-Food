@@ -26,11 +26,6 @@ public class PanelSettings : MonoBehaviour
         this.Register();
     }
 
-    private IEnumerator Start()
-    {
-        yield return LocalizationSettings.InitializationOperation;
-    }
-
     private void Register()
     {
         foreach (Transform item in _panelLanguages)
@@ -58,13 +53,11 @@ public class PanelSettings : MonoBehaviour
 
     private void OnEnable()
     {
+        SaveManager.Instance.ChangeLanguage();
         DataSetting dataSetting = SaveManager.Instance.GetDataSetting();
 
         if (dataSetting != null)
         {
-            Debug.Log((int)dataSetting.enumLanguages);
-
-            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)dataSetting.enumLanguages];
 
             SFXSlider.value = dataSetting.sfx;
             MusicSlider.value = dataSetting.music;
@@ -85,6 +78,7 @@ public class PanelSettings : MonoBehaviour
     private void Confirm()
     {
         SaveManager.Instance.SaveDataSetting(SFXSlider.value, MusicSlider.value, _languageClicked.name);
+        AudioManager.Instance.SetVolume(SFXSlider.value, MusicSlider.value);
         UIManager.instance.ShowPanel(EnumPanelType.MainMenu);
     }
 

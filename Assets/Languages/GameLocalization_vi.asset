@@ -34,6 +34,14 @@ MonoBehaviour:
     m_Localized: "NG\xD4N NG\u1EEE"
     m_Metadata:
       m_Items: []
+  - m_Id: 126051341717504
+    m_Localized: "B\u1EA0N CH\u1EAEC CH\u1EAEN MU\u1ED0N THO\xC1T?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126537373470720
+    m_Localized: "CH\xDAC B\u1EA0N C\xD3 KHO\u1EA2NG TH\u1EDCI GIAN VUI V\u1EBA!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

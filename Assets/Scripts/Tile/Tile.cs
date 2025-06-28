@@ -70,7 +70,11 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         _isChecking = true;
 
         _isFlipped = !_isFlipped;
+
+        AudioManager.Instance.ClickedButton();
+
         this.Flip();
+
         GameEvents.OnTileSelected.Raise(this);
     }
 

@@ -31,6 +31,14 @@ MonoBehaviour:
     m_Key: title_language
     m_Metadata:
       m_Items: []
+  - m_Id: 126051341717504
+    m_Key: title_exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126537373470720
+    m_Key: title_information
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
