@@ -12,6 +12,7 @@ TagManager:
   - PanelRoot
   - Background
   - Canvas
+  - HomeScene
   layers:
   - Default
   - TransparentFX

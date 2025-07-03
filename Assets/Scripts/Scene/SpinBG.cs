@@ -9,7 +9,7 @@ public class SpinBG : MonoBehaviour
 
     private bool _isScaleX = false;
     private float _valScaleDf;
-    private float _maxvalScaleDf;
+    private float _maxValScaleDf;
 
     private GameObject _spinBG;
 
@@ -33,7 +33,7 @@ public class SpinBG : MonoBehaviour
     private void Start()
     {
         _valScaleDf = _spinBG.transform.localScale.x;
-        _maxvalScaleDf = _valScaleDf * 2;
+        _maxValScaleDf = _valScaleDf * 2;
     }
 
     private void Update()
@@ -51,12 +51,18 @@ public class SpinBG : MonoBehaviour
     {
         if (_spinBG.transform.localScale.x < _valScaleDf)
             _isScaleX = true;
-        else if (_spinBG.transform.localScale.x > _maxvalScaleDf)
+        else if (_spinBG.transform.localScale.x > _maxValScaleDf)
             _isScaleX = false;
 
         if (_isScaleX)
             _spinBG.transform.localScale += Vector3.one * Time.deltaTime * zoomSpeed;
         else
             _spinBG.transform.localScale -= Vector3.one * Time.deltaTime * zoomSpeed;
+    }
+
+    public float MaxValScaleDf
+    {
+        get => _maxValScaleDf;
+        set => _maxValScaleDf = value;
     }
 }

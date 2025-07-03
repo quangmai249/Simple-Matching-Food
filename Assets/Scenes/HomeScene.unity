@@ -1014,6 +1014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433b09b2a29beac4cb14555536bef315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPaused: 0
 --- !u!1 &354673801
 GameObject:
   m_ObjectHideFlags: 0
@@ -3414,7 +3415,7 @@ GameObject:
   - component: {fileID: 1045095197}
   m_Layer: 0
   m_Name: HomeScene
-  m_TagString: Untagged
+  m_TagString: HomeScene
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3446,6 +3447,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6fd454176ad37428242ac4c0747d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  txtBG: {fileID: 2061725444}
+  imgBG: {fileID: 1050286870}
+  spinBG: {fileID: 917778372}
 --- !u!1 &1050286868
 GameObject:
   m_ObjectHideFlags: 0

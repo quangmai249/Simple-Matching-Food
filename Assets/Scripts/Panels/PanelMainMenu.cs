@@ -1,6 +1,7 @@
 using Assets.Scrips.Manager;
 using DG.Tweening;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,6 +15,8 @@ public class PanelMainMenu : MonoBehaviour
     [SerializeField] Button _btnSettings;
 
     [SerializeField] GameObject _panelMainMenu;
+
+    private HomeScene homeScene;
 
     private void Awake()
     {
@@ -37,6 +40,8 @@ public class PanelMainMenu : MonoBehaviour
 
     private void Start()
     {
+        homeScene = GameObject.FindGameObjectWithTag(TagName.TAG_HOME_SCENE).GetComponent<HomeScene>();
+
         _panelMainMenu.SetActive(false);
     }
 
@@ -67,6 +72,8 @@ public class PanelMainMenu : MonoBehaviour
     {
         UIManager.instance.ShowPanel(EnumPanelType.MainMenu);
 
-        SceneManager.LoadScene(SceneName.SCENE_GAMEPLAY);
+        homeScene.StartGame();
+
+        //SceneManager.LoadScene(SceneName.SCENE_GAMEPLAY);
     }
 }

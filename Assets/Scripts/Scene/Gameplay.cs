@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class Gameplay : MonoBehaviour
 {
     [SerializeField] bool _isChecking;
+    [SerializeField] bool _isWinGame;
     [SerializeField] int _countMatching = 2;
     [SerializeField] int _countTileMatched;
 
@@ -20,7 +21,6 @@ public class Gameplay : MonoBehaviour
 
     private void Start()
     {
-        UIManager.instance.ShowPanel(EnumPanelType.HUD);
         this.SetDefault();
 
         tileSpawner = GameObject.FindGameObjectWithTag(TagName.TAG_TILE_SPAWNER).GetComponent<TileSpawner>();
@@ -74,11 +74,15 @@ public class Gameplay : MonoBehaviour
         _countTileMatched += _countMatching;
 
         if (_countTileMatched == tileSpawner.MaxTile)
-            yield return StartCoroutine(nameof(this.CheckWinGame));
+        {
+            yield return StartCoroutine(nameof(this.WinGame));
+        }
     }
 
-    private IEnumerator CheckWinGame()
+    private IEnumerator WinGame()
     {
+        _isWinGame = true;
+
         foreach (GameObject item in GameObject.FindGameObjectsWithTag(TagName.TAG_TILE))
             item.GetComponent<Image>().color = new Color(1, 1, 1, 1);
 
@@ -92,7 +96,6 @@ public class Gameplay : MonoBehaviour
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(() =>
                 {
-                    _count_arr = 0;
                     StartCoroutine(nameof(this.CoroutineNextLevel));
                 });
         }
@@ -101,6 +104,7 @@ public class Gameplay : MonoBehaviour
     private IEnumerator CoroutineNextLevel()
     {
         yield return new WaitForSeconds(1f);
+        this.SetDefault();
         GameManager.Instance.DisableAllTiles();
         GameManager.Instance.RestartGame(1f);
     }
@@ -137,9 +141,11 @@ public class Gameplay : MonoBehaviour
 
     }
 
-    private void SetDefault()
+    public void SetDefault()
     {
+        _isWinGame = false;
         _isChecking = false;
+        _count_arr = 0;
         _countTileMatched = 0;
     }
 
@@ -152,7 +158,7 @@ public class Gameplay : MonoBehaviour
         return true;
     }
 
+    public bool IsWinGame { get => _isWinGame; }
     public bool IsChecking { get => _isChecking; }
     public int CountMatching { get => _countMatching; }
-    public int CountArr { get => _count_arr; set => _count_arr = value; }
 }

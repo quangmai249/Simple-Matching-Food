@@ -28,11 +28,7 @@ public class TileSpawner : MonoBehaviour
 
     private void Start()
     {
-        UIManager.instance.ShowPanel(EnumPanelType.HUD);
-
         _gridTileGroup = GameObject.FindGameObjectWithTag(TagName.TAG_GRID_TILE_GROUP);
-
-        StartCoroutine(nameof(SetDefault), 2);
     }
 
     public IEnumerator SetDefault(float timeDisplayGrid)
