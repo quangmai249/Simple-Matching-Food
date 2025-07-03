@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,12 +17,12 @@ namespace Assets.Scrips.Manager
             base.OnDestroy();
         }
 
-        public IEnumerator RestartGame(float timeDisableAllTiles, float timeLoadGameplayScene)
+        public void RestartGame(float timeSpawn)
         {
-            yield return new WaitForSeconds(timeDisableAllTiles);
-            this.DisableAllTiles();
-            yield return new WaitForSeconds(timeLoadGameplayScene);
-            SceneManager.LoadScene(SceneName.SCENE_GAMEPLAY);
+            GameObject tileSpawner = GameObject.FindGameObjectWithTag(TagName.TAG_TILE_SPAWNER);
+
+            if (tileSpawner != null)
+                StartCoroutine(tileSpawner.GetComponent<TileSpawner>().SetDefault(timeSpawn));
         }
 
         public void DisableAllTiles()

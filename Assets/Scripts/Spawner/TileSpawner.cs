@@ -1,3 +1,4 @@
+using Assets.Scrips.Manager;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,9 +28,19 @@ public class TileSpawner : MonoBehaviour
 
     private void Start()
     {
+        UIManager.instance.ShowPanel(EnumPanelType.HUD);
+
         _gridTileGroup = GameObject.FindGameObjectWithTag(TagName.TAG_GRID_TILE_GROUP);
 
+        StartCoroutine(nameof(SetDefault), 2);
+    }
+
+    public IEnumerator SetDefault(float timeDisplayGrid)
+    {
         this.SetRandomTileLevel();
+
+        yield return new WaitForSeconds(timeDisplayGrid);
+
         this.SpawnTile();
     }
 

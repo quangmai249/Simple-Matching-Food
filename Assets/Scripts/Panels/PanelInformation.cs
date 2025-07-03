@@ -12,6 +12,10 @@ public class PanelInformation : MonoBehaviour
     {
         _btnConfirm.onClick.AddListener(Confirm);
     }
+    private void OnEnable()
+    {
+        SaveManager.Instance.ChangeLanguage();
+    }
 
     private void Confirm()
     {

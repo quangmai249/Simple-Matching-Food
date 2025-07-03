@@ -13,6 +13,9 @@ public class PanelHUD : MonoBehaviour
 
     private void Replay()
     {
-        StartCoroutine(GameManager.Instance.RestartGame(0, 1));
+        GameObject.FindGameObjectWithTag(TagName.TAG_GAMEPLAY).GetComponent<Gameplay>().CountArr = 0;
+
+        GameManager.Instance.DisableAllTiles();
+        GameManager.Instance.RestartGame(1f);
     }
 }

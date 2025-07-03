@@ -29,7 +29,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     private void OnDisable()
     {
-        DOTween.Kill(this.transform);
+        DOTween.Kill(_rt);
     }
 
     public void SetDefault()
@@ -48,8 +48,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler
             {
                 _img.sprite = _frontImg;
 
-                _rt.DOScaleX(1f, 0.15f).SetEase(Ease.InOutSine).SetUpdate(true);
-            });
+                _rt.DOScaleX(1f, 0.15f).SetEase(Ease.InOutSine).SetUpdate(true).SetAutoKill(true);
+            }).SetAutoKill(true);
         }
         else
         {
@@ -57,8 +57,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler
             {
                 _img.sprite = _backImg;
 
-                _rt.DOScaleX(1f, 0.15f).SetEase(Ease.InOutSine).SetUpdate(true);
-            });
+                _rt.DOScaleX(1f, 0.15f).SetEase(Ease.InOutSine).SetUpdate(true).SetAutoKill(true);
+            }).SetAutoKill(true);
         }
     }
 

@@ -10,6 +10,8 @@ TagManager:
   - Gameplay
   - GridTileGroup
   - PanelRoot
+  - Background
+  - Canvas
   layers:
   - Default
   - TransparentFX

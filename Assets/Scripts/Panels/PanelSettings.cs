@@ -26,6 +26,11 @@ public class PanelSettings : MonoBehaviour
         this.Register();
     }
 
+    private void Update()
+    {
+        AudioManager.Instance.SetVolume(SFXSlider.value, MusicSlider.value);
+    }
+
     private void Register()
     {
         foreach (Transform item in _panelLanguages)
@@ -56,29 +61,30 @@ public class PanelSettings : MonoBehaviour
         SaveManager.Instance.ChangeLanguage();
         DataSetting dataSetting = SaveManager.Instance.GetDataSetting();
 
-        if (dataSetting != null)
+        SFXSlider.value = dataSetting.sfx;
+        MusicSlider.value = dataSetting.music;
+
+        foreach (var item in languages)
         {
-
-            SFXSlider.value = dataSetting.sfx;
-            MusicSlider.value = dataSetting.music;
-
-            foreach (var item in languages)
+            if (dataSetting.enumLanguages == item.Key)
             {
-                if (dataSetting.enumLanguages == item.Key)
-                {
-                    this.ChangeLanguage(item.Value);
-                    return;
-                }
+                this.ChangeLanguage(item.Value);
+                return;
             }
-
-            this.ChangeLanguage(languages.FirstOrDefault().Value);
         }
+
+        this.ChangeLanguage(languages.FirstOrDefault().Value);
+    }
+
+    private void OnDisable()
+    {
+        DataSetting dataSetting = SaveManager.Instance.GetDataSetting();
+        AudioManager.Instance.SetVolume(dataSetting.Sfx, dataSetting.Music);
     }
 
     private void Confirm()
     {
         SaveManager.Instance.SaveDataSetting(SFXSlider.value, MusicSlider.value, _languageClicked.name);
-        AudioManager.Instance.SetVolume(SFXSlider.value, MusicSlider.value);
         UIManager.instance.ShowPanel(EnumPanelType.MainMenu);
     }
 

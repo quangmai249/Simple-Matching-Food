@@ -18,26 +18,23 @@ public class Gameplay : MonoBehaviour
     private TileSpawner tileSpawner;
     private GameObject _gridTileGroup;
 
-    private void Awake()
+    private void Start()
     {
+        UIManager.instance.ShowPanel(EnumPanelType.HUD);
+        this.SetDefault();
+
         tileSpawner = GameObject.FindGameObjectWithTag(TagName.TAG_TILE_SPAWNER).GetComponent<TileSpawner>();
         _gridTileGroup = GameObject.FindGameObjectWithTag(TagName.TAG_GRID_TILE_GROUP);
     }
 
-    private void Start()
-    {
-        this.SetDefault();
-        UIManager.instance.ShowPanel(EnumPanelType.HUD);
-    }
-
     private void OnEnable()
     {
-        GameEvents.OnTileSelected.Register(Selected);
+        GameEvents.OnTileSelected.Register(this.Selected);
     }
 
     private void OnDisable()
     {
-        GameEvents.OnTileSelected.Unregister(Selected);
+        GameEvents.OnTileSelected.Unregister(this.Selected);
     }
 
     private void Selected(Tile tile)
@@ -87,13 +84,25 @@ public class Gameplay : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
 
-        _gridTileGroup.transform
-            .DOScale(1.25f, 0.25f)
-            .SetLoops(2, LoopType.Yoyo)
-            .SetEase(Ease.InOutQuad);
+        if (_gridTileGroup != null)
+        {
+            _gridTileGroup.transform
+                .DOScale(1.25f, 0.25f)
+                .SetLoops(2, LoopType.Yoyo)
+                .SetEase(Ease.InOutQuad)
+                .OnComplete(() =>
+                {
+                    _count_arr = 0;
+                    StartCoroutine(nameof(this.CoroutineNextLevel));
+                });
+        }
+    }
 
-        yield return
-            StartCoroutine(GameManager.Instance.RestartGame(3, 1));
+    private IEnumerator CoroutineNextLevel()
+    {
+        yield return new WaitForSeconds(1f);
+        GameManager.Instance.DisableAllTiles();
+        GameManager.Instance.RestartGame(1f);
     }
 
     private IEnumerator CoroutineNotMatched()
@@ -145,4 +154,5 @@ public class Gameplay : MonoBehaviour
 
     public bool IsChecking { get => _isChecking; }
     public int CountMatching { get => _countMatching; }
+    public int CountArr { get => _count_arr; set => _count_arr = value; }
 }

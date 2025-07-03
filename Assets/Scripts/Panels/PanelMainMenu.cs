@@ -1,4 +1,5 @@
 using Assets.Scrips.Manager;
+using DG.Tweening;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -37,6 +38,11 @@ public class PanelMainMenu : MonoBehaviour
     private void Start()
     {
         _panelMainMenu.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+
     }
 
     private void Information()

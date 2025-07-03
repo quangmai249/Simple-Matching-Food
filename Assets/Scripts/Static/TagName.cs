@@ -7,4 +7,6 @@ public static class TagName
     public static string TAG_TILE_SPAWNER = "TileSpawner";
     public static string TAG_TILE_POOL = "TilePool";
     public static string TAG_PANEL_ROOT = "PanelRoot";
+    public static string TAG_BACKGROUND = "Background";
+    public static string TAG_CANVAS = "Canvas";
 }

@@ -1,4 +1,5 @@
 using Assets.Scrips.Manager;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,5 +16,14 @@ public class HomeScene : MonoBehaviour
     private void Start()
     {
         UIManager.instance.ShowPanel(EnumPanelType.MainMenu);
+    }
+
+    private void OnDisable()
+    {
+        DOTween.Clear(true);
+    }
+
+    private void OnDestroy()
+    {
     }
 }

@@ -27,6 +27,10 @@ namespace Assets.Scrips.Manager
             this.Register();
         }
 
+        private void Start()
+        {
+        }
+
         private void Register()
         {
             _panelRoot = GameObject.FindGameObjectWithTag(TagName.TAG_PANEL_ROOT).transform;
