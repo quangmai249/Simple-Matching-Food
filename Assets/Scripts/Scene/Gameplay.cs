@@ -105,7 +105,6 @@ public class Gameplay : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         this.SetDefault();
-        GameManager.Instance.DisableAllTiles();
         GameManager.Instance.RestartGame(1f);
     }
 

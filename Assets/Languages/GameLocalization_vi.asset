@@ -42,6 +42,10 @@ MonoBehaviour:
     m_Localized: "CH\xDAC B\u1EA0N C\xD3 KHO\u1EA2NG TH\u1EDCI GIAN VUI V\u1EBA!"
     m_Metadata:
       m_Items: []
+  - m_Id: 2777218748141568
+    m_Localized: "CH\u1EDC M\xCCNH CH\xDAT"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

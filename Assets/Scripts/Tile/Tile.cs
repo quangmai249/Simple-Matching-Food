@@ -21,7 +21,9 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     private void Start()
     {
         _img = GetComponent<Image>();
+
         gameplay = GameObject.FindGameObjectWithTag(TagName.TAG_GAMEPLAY).GetComponent<Gameplay>();
+
         this.SetDefault();
 
         _rt = transform as RectTransform;
@@ -36,7 +38,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     {
         _isFlipped = false;
         _isMatched = false;
-
+        _isChecking = false;
         _img.sprite = _backImg;
     }
 
@@ -65,10 +67,16 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         if (GameManager.Instance.IsPaused)
+        {
+            Debug.Log("Game is paused, cannot flip tile.");
             return;
+        }
 
         if (_isChecking || _isMatched || gameplay.IsChecking || gameplay.IsWinGame)
+        {
+            Debug.Log("Tile is already being checked or matched, or game is in a win state.");
             return;
+        }
 
         _isChecking = true;
 

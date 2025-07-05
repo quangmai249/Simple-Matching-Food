@@ -34,4 +34,9 @@ public class ObjectPool : IPooledObject
         obj.transform.SetParent(parent.transform);
         _pool.Enqueue(obj.gameObject);
     }
+
+    public int PoolSize
+    {
+        get => _pool.Count;
+    }
 }

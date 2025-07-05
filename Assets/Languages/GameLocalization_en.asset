@@ -42,6 +42,10 @@ MonoBehaviour:
     m_Localized: "ENJOY YOUR TIME!\t"
     m_Metadata:
       m_Items: []
+  - m_Id: 2777218748141568
+    m_Localized: LOADING
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

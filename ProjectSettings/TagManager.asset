@@ -13,6 +13,7 @@ TagManager:
   - Background
   - Canvas
   - HomeScene
+  - Loading
   layers:
   - Default
   - TransparentFX

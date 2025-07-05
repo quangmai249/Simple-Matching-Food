@@ -39,6 +39,10 @@ MonoBehaviour:
     m_Key: title_information
     m_Metadata:
       m_Items: []
+  - m_Id: 2777218748141568
+    m_Key: txt_loading
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

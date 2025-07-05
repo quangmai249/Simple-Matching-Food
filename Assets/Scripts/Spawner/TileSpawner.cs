@@ -15,20 +15,14 @@ public class TileSpawner : MonoBehaviour
     private int _row, _col, _maxTile, _maxSprite;
 
     private GameObject _tile;
-    private GameObject _gridTileGroup;
 
     private Gameplay gameplay;
 
     private Queue<int> queue = new Queue<int>();
 
-    private void Awake()
-    {
-        gameplay = GameObject.FindGameObjectWithTag(TagName.TAG_GAMEPLAY).GetComponent<Gameplay>();
-    }
-
     private void Start()
     {
-        _gridTileGroup = GameObject.FindGameObjectWithTag(TagName.TAG_GRID_TILE_GROUP);
+        gameplay = GameObject.FindGameObjectWithTag(TagName.TAG_GAMEPLAY).GetComponent<Gameplay>();
     }
 
     public IEnumerator SetDefault(float timeDisplayGrid)
@@ -74,6 +68,8 @@ public class TileSpawner : MonoBehaviour
 
     private void SpawnTile()
     {
+        GameObject _gridTileGroup = GameObject.FindGameObjectWithTag(TagName.TAG_GRID_TILE_GROUP);
+
         _gridTileGroup.GetComponent<GridLayoutGroup>().constraint = GridLayoutGroup.Constraint.FixedColumnCount;
         _gridTileGroup.GetComponent<GridLayoutGroup>().constraintCount = _col;
 
@@ -103,6 +99,8 @@ public class TileSpawner : MonoBehaviour
 
     private void ReponsiveGrid(int columns, int rows)
     {
+        GameObject _gridTileGroup = GameObject.FindGameObjectWithTag(TagName.TAG_GRID_TILE_GROUP);
+
         Vector2 spacing = new Vector2(5f, 5f);
         Vector2 padding = new Vector2(10f, 10f);
 

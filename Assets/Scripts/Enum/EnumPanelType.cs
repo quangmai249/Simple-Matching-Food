@@ -1,5 +1,6 @@
 public enum EnumPanelType
 {
+    Loading,
     MainMenu,
     Settings,
     Pause,

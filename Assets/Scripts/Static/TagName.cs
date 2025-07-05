@@ -4,6 +4,7 @@ public static class TagName
     public static string TAG_GRID_TILE_GROUP = "GridTileGroup";
     public static string TAG_GAME_MANAGER = "GameController";
     public static string TAG_HOME_SCENE = "HomeScene";
+    public static string TAG_LOADING_SCENE = "Loading";
     public static string TAG_GAMEPLAY = "Gameplay";
     public static string TAG_TILE_SPAWNER = "TileSpawner";
     public static string TAG_TILE_POOL = "TilePool";

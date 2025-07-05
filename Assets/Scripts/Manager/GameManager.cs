@@ -29,7 +29,10 @@ namespace Assets.Scrips.Manager
             GameObject tileSpawner = GameObject.FindGameObjectWithTag(TagName.TAG_TILE_SPAWNER);
 
             if (tileSpawner != null)
+            {
+                this.DisableAllTiles();
                 StartCoroutine(tileSpawner.GetComponent<TileSpawner>().SetDefault(timeSpawn));
+            }
         }
 
         public void DisableAllTiles()
