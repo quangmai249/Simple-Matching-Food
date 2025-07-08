@@ -40,6 +40,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         _isMatched = false;
         _isChecking = false;
         _img.sprite = _backImg;
+        _img.color = Color.white;
     }
 
     public void Flip()
@@ -68,7 +69,6 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     {
         if (GameManager.Instance.IsPaused)
         {
-            Debug.Log("Game is paused, cannot flip tile.");
             return;
         }
 

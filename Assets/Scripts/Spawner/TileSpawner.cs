@@ -12,38 +12,46 @@ public class TileSpawner : MonoBehaviour
     [SerializeField] List<Sprite> lsBackImg = new List<Sprite>();
     [SerializeField] List<Sprite> lsFrontImg = new List<Sprite>();
 
-    private int _row, _col, _maxTile, _maxSprite;
+    private int _row, _col, _maxTile, _maxSprite, _countMatching;
 
-    private GameObject _tile;
+    private int _level;
 
-    private Gameplay gameplay;
+    private GameObject _tile, _gridTileGroup;
 
     private Queue<int> queue = new Queue<int>();
 
+    // Grid properties
+    private Vector2 gridCellSizeDF, gridSpacingDF;
+    private RectOffset gridPaddingDF;
+
     private void Start()
     {
-        gameplay = GameObject.FindGameObjectWithTag(TagName.TAG_GAMEPLAY).GetComponent<Gameplay>();
+        _level = 0;
     }
 
     public IEnumerator SetDefault(float timeDisplayGrid)
     {
+        GameEvents.OnLevelChange.Raise(_level);
+
         this.SetRandomTileLevel();
 
         yield return new WaitForSeconds(timeDisplayGrid);
 
         this.SpawnTile();
+
+        _level++;
     }
 
     private void SetRandomTileLevel()
     {
-        _col = Random.Range(2, 7);
-        _row = Random.Range(2, 11);
+        _col = (int)LevelManager.Instance.GetDataLevel(_level).levelSize.x;
+        _row = (int)LevelManager.Instance.GetDataLevel(_level).levelSize.y;
 
-        if (_col % 2 != 0 && _row % 2 != 0)
-            _col++;
+        _countMatching = LevelManager.Instance.GetDataLevel(_level).matchingCount;
 
         _maxTile = _col * _row;
-        _maxSprite = _maxTile / gameplay.CountMatching;
+
+        _maxSprite = _maxTile / _countMatching;
 
         int[] arr = new int[_maxTile];
 
@@ -54,22 +62,31 @@ public class TileSpawner : MonoBehaviour
             hashSet.Add(Random.Range(0, lsFrontImg.Count - 1));
         }
 
-        hashSet.CopyTo(arr);
-        hashSet.CopyTo(arr, arr.Length / 2);
+        if (_countMatching % 2 == 0)
+        {
+            hashSet.CopyTo(arr);
+            hashSet.CopyTo(arr, arr.Length / 2);
+        }
+        else
+        {
+            hashSet.CopyTo(arr);
+            hashSet.CopyTo(arr, arr.Length / 3);
+            hashSet.CopyTo(arr, arr.Length * 2 / 3);
+        }
 
         ShuffleArray(arr);
 
         foreach (var item in arr)
             queue.Enqueue(item);
 
-        if (_col > 4)
+        if (_col > 6)
             this.ReponsiveGrid(_col, _row);
+        else if (_gridTileGroup.GetComponent<GridLayoutGroup>().cellSize != this.gridCellSizeDF)
+            this.DefaultReponsiveGrid();
     }
 
     private void SpawnTile()
     {
-        GameObject _gridTileGroup = GameObject.FindGameObjectWithTag(TagName.TAG_GRID_TILE_GROUP);
-
         _gridTileGroup.GetComponent<GridLayoutGroup>().constraint = GridLayoutGroup.Constraint.FixedColumnCount;
         _gridTileGroup.GetComponent<GridLayoutGroup>().constraintCount = _col;
 
@@ -99,7 +116,7 @@ public class TileSpawner : MonoBehaviour
 
     private void ReponsiveGrid(int columns, int rows)
     {
-        GameObject _gridTileGroup = GameObject.FindGameObjectWithTag(TagName.TAG_GRID_TILE_GROUP);
+        _gridTileGroup = GameObject.FindGameObjectWithTag(TagName.TAG_GRID_TILE_GROUP);
 
         Vector2 spacing = new Vector2(5f, 5f);
         Vector2 padding = new Vector2(10f, 10f);
@@ -117,6 +134,44 @@ public class TileSpawner : MonoBehaviour
             Mathf.RoundToInt(padding.y),
             Mathf.RoundToInt(padding.y)
         );
+    }
+
+    private void DefaultReponsiveGrid()
+    {
+        _gridTileGroup.GetComponent<GridLayoutGroup>().cellSize = this.gridCellSizeDF;
+        _gridTileGroup.GetComponent<GridLayoutGroup>().spacing = this.gridSpacingDF;
+        _gridTileGroup.GetComponent<GridLayoutGroup>().padding = this.gridPaddingDF;
+    }
+
+    public int CurrentLevel
+    {
+        get => _level;
+    }
+
+    public int CountMatching
+    {
+        get => _countMatching;
+    }
+
+    public GameObject GridTileGroup
+    {
+        get => _gridTileGroup;
+        set => _gridTileGroup = value;
+    }
+
+    public Vector2 GridCellSizeDF
+    {
+        set => gridCellSizeDF = value;
+    }
+
+    public Vector2 GridSpacingDF
+    {
+        set => gridSpacingDF = value;
+    }
+
+    public RectOffset GridPaddingDF
+    {
+        set => gridPaddingDF = value;
     }
 
     public int MaxTile

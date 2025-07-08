@@ -8,23 +8,21 @@ using UnityEngine.UI;
 
 public class Gameplay : MonoBehaviour
 {
+    [Header("Properties")]
     [SerializeField] bool _isChecking;
     [SerializeField] bool _isWinGame;
-    [SerializeField] int _countMatching = 2;
     [SerializeField] int _countTileMatched;
 
-    private int _count_arr;
+    private int _count_arr, _countMatching;
     private Tile[] arr = new Tile[10];
 
     private TileSpawner tileSpawner;
-    private GameObject _gridTileGroup;
 
     private void Start()
     {
         this.SetDefault();
 
         tileSpawner = GameObject.FindGameObjectWithTag(TagName.TAG_TILE_SPAWNER).GetComponent<TileSpawner>();
-        _gridTileGroup = GameObject.FindGameObjectWithTag(TagName.TAG_GRID_TILE_GROUP);
     }
 
     private void OnEnable()
@@ -37,10 +35,18 @@ public class Gameplay : MonoBehaviour
         GameEvents.OnTileSelected.Unregister(this.Selected);
     }
 
+    private void OnDestroy()
+    {
+        GameEvents.OnTileSelected.Clear();
+    }
+
     private void Selected(Tile tile)
     {
         arr[_count_arr] = tile;
+
         _count_arr++;
+
+        _countMatching = tileSpawner.CountMatching;
 
         if (_count_arr == _countMatching)
         {
@@ -88,6 +94,8 @@ public class Gameplay : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
 
+        GameObject _gridTileGroup = GameObject.FindGameObjectWithTag(TagName.TAG_GRID_TILE_GROUP);
+
         if (_gridTileGroup != null)
         {
             _gridTileGroup.transform
@@ -96,16 +104,14 @@ public class Gameplay : MonoBehaviour
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(() =>
                 {
-                    StartCoroutine(nameof(this.CoroutineNextLevel));
+                    if (tileSpawner.CurrentLevel == LevelManager.Instance.GetMaxLevel())
+                    {
+                        Debug.Log("Win game");
+                    }
+                    else
+                        UIManager.instance.ShowPanel(EnumPanelType.LevelWin);
                 });
         }
-    }
-
-    private IEnumerator CoroutineNextLevel()
-    {
-        yield return new WaitForSeconds(1f);
-        this.SetDefault();
-        GameManager.Instance.RestartGame(1f);
     }
 
     private IEnumerator CoroutineNotMatched()
@@ -159,5 +165,4 @@ public class Gameplay : MonoBehaviour
 
     public bool IsWinGame { get => _isWinGame; }
     public bool IsChecking { get => _isChecking; }
-    public int CountMatching { get => _countMatching; }
 }
