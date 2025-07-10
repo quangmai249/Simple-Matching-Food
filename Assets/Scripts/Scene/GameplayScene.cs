@@ -17,20 +17,29 @@ public class GameplayScene : MonoBehaviour
 
     [SerializeField] Button btnNextLevel;
     [SerializeField] Button btnExit;
+    [SerializeField] Button btnReplay;
+    [SerializeField] Button btnExitLose;
 
     private TileSpawner tileSpawner;
+    private TimeManager timeManager;
 
     private void Awake()
     {
         SaveManager.Instance.ChangeLanguage();
+
         tileSpawner = GameObject.FindGameObjectWithTag(TagName.TAG_TILE_SPAWNER).GetComponent<TileSpawner>();
+        timeManager = GameObject.FindGameObjectWithTag(TagName.TAG_TIME_MANAGER).GetComponent<TimeManager>();
 
         btnNextLevel.onClick.AddListener(NextLevel);
         btnExit.onClick.AddListener(Exit);
+
+        btnReplay.onClick.AddListener(Replay);
+        btnExitLose.onClick.AddListener(Exit);
     }
 
     private IEnumerator Start()
     {
+
         UIManager.instance.ShowPanel(EnumPanelType.Loading);
 
         yield return new WaitForSeconds(2f);
@@ -44,7 +53,10 @@ public class GameplayScene : MonoBehaviour
 
         this.AnimBegin();
 
-        tileSpawner.StartCoroutine(nameof(tileSpawner.SetDefault), 2f);
+        tileSpawner.StartCoroutine(tileSpawner.SetDefault(2f));
+        timeManager.SetTimeLimit();
+
+        StartCoroutine(timeManager.CoroutineRunTime(2f));
     }
 
     private void OnEnable()
@@ -78,6 +90,8 @@ public class GameplayScene : MonoBehaviour
 
     private IEnumerator CoroutineNextLevel()
     {
+        timeManager.SetTimeLimit();
+
         UIManager.instance.ShowPanel(EnumPanelType.Loading);
 
         yield return new WaitForSeconds(3f);
@@ -87,6 +101,21 @@ public class GameplayScene : MonoBehaviour
         UIManager.instance.ShowPanel(EnumPanelType.HUD);
 
         GameManager.Instance.RestartGame(.5f);
+
+        StartCoroutine(timeManager.CoroutineRunTime(.5f));
+    }
+
+    private void Replay()
+    {
+        GameObject.FindGameObjectWithTag(TagName.TAG_GAMEPLAY).GetComponent<Gameplay>()?.SetDefault();
+
+        timeManager.SetTimeLimit();
+
+        UIManager.instance.ShowPanel(EnumPanelType.HUD);
+
+        GameManager.Instance.RestartGame(.5f);
+
+        StartCoroutine(timeManager.CoroutineRunTime(.5f));
     }
 
     private void Exit()

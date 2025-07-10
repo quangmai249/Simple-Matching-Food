@@ -30,11 +30,6 @@ public class Gameplay : MonoBehaviour
         GameEvents.OnTileSelected.Register(this.Selected);
     }
 
-    private void OnDisable()
-    {
-        GameEvents.OnTileSelected.Unregister(this.Selected);
-    }
-
     private void OnDestroy()
     {
         GameEvents.OnTileSelected.Clear();
@@ -89,6 +84,8 @@ public class Gameplay : MonoBehaviour
     {
         _isWinGame = true;
 
+        tileSpawner.CurrentLevel++;
+
         foreach (GameObject item in GameObject.FindGameObjectsWithTag(TagName.TAG_TILE))
             item.GetComponent<Image>().color = new Color(1, 1, 1, 1);
 
@@ -104,6 +101,8 @@ public class Gameplay : MonoBehaviour
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(() =>
                 {
+                    StopAllCoroutines();
+
                     if (tileSpawner.CurrentLevel == LevelManager.Instance.GetMaxLevel())
                     {
                         Debug.Log("Win game");
@@ -112,6 +111,7 @@ public class Gameplay : MonoBehaviour
                         UIManager.instance.ShowPanel(EnumPanelType.LevelWin);
                 });
         }
+
     }
 
     private IEnumerator CoroutineNotMatched()

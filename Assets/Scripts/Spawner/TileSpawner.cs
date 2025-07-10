@@ -38,8 +38,6 @@ public class TileSpawner : MonoBehaviour
         yield return new WaitForSeconds(timeDisplayGrid);
 
         this.SpawnTile();
-
-        _level++;
     }
 
     private void SetRandomTileLevel()
@@ -146,6 +144,7 @@ public class TileSpawner : MonoBehaviour
     public int CurrentLevel
     {
         get => _level;
+        set => _level = value;
     }
 
     public int CountMatching

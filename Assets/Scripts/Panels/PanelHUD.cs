@@ -1,5 +1,6 @@
 using Assets.Scrips.Manager;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 

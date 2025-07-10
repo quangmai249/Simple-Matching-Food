@@ -11,4 +11,5 @@ public static class TagName
     public static string TAG_PANEL_ROOT = "PanelRoot";
     public static string TAG_BACKGROUND = "Background";
     public static string TAG_CANVAS = "Canvas";
+    public static string TAG_TIME_MANAGER = "TimeManager";
 }

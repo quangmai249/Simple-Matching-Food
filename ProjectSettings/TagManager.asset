@@ -14,6 +14,7 @@ TagManager:
   - Canvas
   - HomeScene
   - Loading
+  - TimeManager
   layers:
   - Default
   - TransparentFX
