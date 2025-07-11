@@ -46,6 +46,14 @@ MonoBehaviour:
     m_Localized: LOADING
     m_Metadata:
       m_Items: []
+  - m_Id: 4874743957311488
+    m_Localized: UNCOMPLETED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4875196518518784
+    m_Localized: COMPLETED
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

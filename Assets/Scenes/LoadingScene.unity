@@ -1100,7 +1100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0cf68c474833048abc2f44d6fdfcf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePoolSize: 100
+  tilePoolSize: 4
   tilePrefab: {fileID: 2584917816935348572, guid: d5452326867502f40a991c0b1efb1ef2, type: 3}
 --- !u!4 &1661085501
 Transform:

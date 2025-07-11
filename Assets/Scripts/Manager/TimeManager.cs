@@ -34,29 +34,29 @@ public class TimeManager : MonoBehaviour
 
     public IEnumerator CoroutineRunTime(float timeStart)
     {
-        yield return new WaitForSeconds(timeStart);
+        yield return new WaitForSeconds(timeStart + 1);
+
+        gameplay.IsStarted = true;
 
         _isRunTime = true;
 
-        while (_isRunTime && _timeLimit >= 0)
+        while (_isRunTime && _timeLimit > 0)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.1f);
 
-            _timeLimit -= 1f;
+            _timeLimit -= 0.1f;
 
-            GameEvents.OnTimeLimitChange.Raise(_timeLimit);
-
-            if (_timeLimit <= 0)
+            if (!gameplay.IsWinGame)
             {
-                _isRunTime = false;
+                GameEvents.OnTimeLimitChange.Raise(_timeLimit);
 
-                yield return new WaitForSeconds(.5f);
-
-                UIManager.instance.ShowPanel(EnumPanelType.LevelLose);
+                if (_timeLimit <= 0)
+                {
+                    gameplay.IsLoseGame = true;
+                    _isRunTime = false;
+                    UIManager.instance.ShowPanel(EnumPanelType.LevelLose);
+                }
             }
-
-            if (gameplay.IsWinGame)
-                _isRunTime = false;
         }
     }
 

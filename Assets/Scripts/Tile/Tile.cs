@@ -67,14 +67,12 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (GameManager.Instance.IsPaused)
-        {
+        if (GameManager.Instance.IsPaused || !gameplay.IsStarted || gameplay.IsWinGame)
             return;
-        }
 
-        if (_isChecking || _isMatched || gameplay.IsChecking || gameplay.IsWinGame)
+        if (_isChecking || _isMatched || gameplay.IsChecking)
         {
-            Debug.Log("Tile is already being checked or matched, or game is in a win state.");
+            Debug.Log("Tile is already being checked or matched.");
             return;
         }
 

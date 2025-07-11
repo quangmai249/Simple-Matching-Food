@@ -43,6 +43,14 @@ MonoBehaviour:
     m_Key: txt_loading
     m_Metadata:
       m_Items: []
+  - m_Id: 4874743957311488
+    m_Key: txt_lose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4875196518518784
+    m_Key: txt_win
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

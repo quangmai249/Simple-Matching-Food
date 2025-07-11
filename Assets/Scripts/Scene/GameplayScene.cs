@@ -9,12 +9,19 @@ using UnityEngine.UI;
 
 public class GameplayScene : MonoBehaviour
 {
+    [Header("Background")]
     [SerializeField] Image imgBG;
     [SerializeField] Image loading;
 
+    [Header("Stars")]
+    [SerializeField] Sprite spriteStar;
+
+    [Header("Text")]
     [SerializeField] TextMeshProUGUI txtLevel;
     [SerializeField] TextMeshProUGUI txtLevelCompleted;
+    [SerializeField] TextMeshProUGUI txtLevelUncompleted;
 
+    [Header("Button")]
     [SerializeField] Button btnNextLevel;
     [SerializeField] Button btnExit;
     [SerializeField] Button btnReplay;
@@ -53,10 +60,10 @@ public class GameplayScene : MonoBehaviour
 
         this.AnimBegin();
 
-        tileSpawner.StartCoroutine(tileSpawner.SetDefault(2f));
         timeManager.SetTimeLimit();
+        tileSpawner.StartCoroutine(tileSpawner.SetDefault(2f));
 
-        StartCoroutine(timeManager.CoroutineRunTime(2f));
+        StartCoroutine(timeManager.CoroutineRunTime(2.5f));
     }
 
     private void OnEnable()
@@ -78,9 +85,15 @@ public class GameplayScene : MonoBehaviour
     private void OnLeveCompleted(int level)
     {
         if (level >= 0)
-            txtLevelCompleted.text = LevelManager.Instance.GetDataLevel(level).levelName + " completed!";
+        {
+            txtLevelCompleted.text = LevelManager.Instance.GetDataLevel(level).levelName;
+            txtLevelUncompleted.text = LevelManager.Instance.GetDataLevel(level).levelName;
+        }
         else
+        {
             txtLevelCompleted.text = null;
+            txtLevelUncompleted.text = null;
+        }
     }
 
     private void NextLevel()
@@ -102,20 +115,20 @@ public class GameplayScene : MonoBehaviour
 
         GameManager.Instance.RestartGame(.5f);
 
-        StartCoroutine(timeManager.CoroutineRunTime(.5f));
+        StartCoroutine(timeManager.CoroutineRunTime(1f));
     }
 
     private void Replay()
     {
-        GameObject.FindGameObjectWithTag(TagName.TAG_GAMEPLAY).GetComponent<Gameplay>()?.SetDefault();
-
         timeManager.SetTimeLimit();
+
+        GameObject.FindGameObjectWithTag(TagName.TAG_GAMEPLAY).GetComponent<Gameplay>()?.SetDefault();
 
         UIManager.instance.ShowPanel(EnumPanelType.HUD);
 
         GameManager.Instance.RestartGame(.5f);
 
-        StartCoroutine(timeManager.CoroutineRunTime(.5f));
+        StartCoroutine(timeManager.CoroutineRunTime(1f));
     }
 
     private void Exit()

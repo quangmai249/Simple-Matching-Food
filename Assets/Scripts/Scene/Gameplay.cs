@@ -9,8 +9,10 @@ using UnityEngine.UI;
 public class Gameplay : MonoBehaviour
 {
     [Header("Properties")]
+    [SerializeField] bool _isStarted;
     [SerializeField] bool _isChecking;
     [SerializeField] bool _isWinGame;
+    [SerializeField] bool _isLoseGame;
     [SerializeField] int _countTileMatched;
 
     private int _count_arr, _countMatching;
@@ -102,16 +104,15 @@ public class Gameplay : MonoBehaviour
                 .OnComplete(() =>
                 {
                     StopAllCoroutines();
-
-                    if (tileSpawner.CurrentLevel == LevelManager.Instance.GetMaxLevel())
-                    {
-                        Debug.Log("Win game");
-                    }
-                    else
-                        UIManager.instance.ShowPanel(EnumPanelType.LevelWin);
+                    StartCoroutine(nameof(DisplayPanelWin));
                 });
         }
+    }
 
+    private IEnumerator DisplayPanelWin()
+    {
+        yield return new WaitForSeconds(.75f);
+        UIManager.instance.ShowPanel(EnumPanelType.LevelWin);
     }
 
     private IEnumerator CoroutineNotMatched()
@@ -125,7 +126,8 @@ public class Gameplay : MonoBehaviour
             arr[i].IsChecking = false;
         }
 
-        AudioManager.Instance.TileNotMatched();
+        if (!_isLoseGame)
+            AudioManager.Instance.TileNotMatched();
 
         _count_arr = 0;
 
@@ -148,6 +150,7 @@ public class Gameplay : MonoBehaviour
 
     public void SetDefault()
     {
+        _isStarted = false;
         _isWinGame = false;
         _isChecking = false;
         _count_arr = 0;
@@ -163,6 +166,8 @@ public class Gameplay : MonoBehaviour
         return true;
     }
 
+    public bool IsStarted { get => _isStarted; set => _isStarted = value; }
     public bool IsWinGame { get => _isWinGame; }
+    public bool IsLoseGame { set => _isLoseGame = value; }
     public bool IsChecking { get => _isChecking; }
 }
