@@ -15,6 +15,7 @@ TagManager:
   - HomeScene
   - Loading
   - TimeManager
+  - GameplayScene
   layers:
   - Default
   - TransparentFX

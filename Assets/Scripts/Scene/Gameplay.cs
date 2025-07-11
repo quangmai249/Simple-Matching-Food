@@ -19,12 +19,16 @@ public class Gameplay : MonoBehaviour
     private Tile[] arr = new Tile[10];
 
     private TileSpawner tileSpawner;
+    private TimeManager timeManager;
+    private GameplayScene gameplayScene;
 
     private void Start()
     {
         this.SetDefault();
 
         tileSpawner = GameObject.FindGameObjectWithTag(TagName.TAG_TILE_SPAWNER).GetComponent<TileSpawner>();
+        timeManager = GameObject.FindGameObjectWithTag(TagName.TAG_TIME_MANAGER).GetComponent<TimeManager>();
+        gameplayScene = GameObject.FindGameObjectWithTag(SceneName.SCENE_GAMEPLAY).GetComponent<GameplayScene>();
     }
 
     private void OnEnable()
@@ -104,15 +108,9 @@ public class Gameplay : MonoBehaviour
                 .OnComplete(() =>
                 {
                     StopAllCoroutines();
-                    StartCoroutine(nameof(DisplayPanelWin));
+                    StartCoroutine(gameplayScene.DisplayPanelWin());
                 });
         }
-    }
-
-    private IEnumerator DisplayPanelWin()
-    {
-        yield return new WaitForSeconds(.75f);
-        UIManager.instance.ShowPanel(EnumPanelType.LevelWin);
     }
 
     private IEnumerator CoroutineNotMatched()

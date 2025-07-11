@@ -60,6 +60,11 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+    public float TimeLimit
+    {
+        get => _timeLimit;
+    }
+
     public void SetTimeLimit()
     {
         _isRunTime = false;

@@ -14,7 +14,9 @@ public class GameplayScene : MonoBehaviour
     [SerializeField] Image loading;
 
     [Header("Stars")]
+    [SerializeField] GameObject panelStar;
     [SerializeField] Sprite spriteStar;
+    [SerializeField] Sprite spriteNoneStar;
 
     [Header("Text")]
     [SerializeField] TextMeshProUGUI txtLevel;
@@ -46,7 +48,6 @@ public class GameplayScene : MonoBehaviour
 
     private IEnumerator Start()
     {
-
         UIManager.instance.ShowPanel(EnumPanelType.Loading);
 
         yield return new WaitForSeconds(2f);
@@ -134,6 +135,32 @@ public class GameplayScene : MonoBehaviour
     private void Exit()
     {
         SceneManager.LoadScene(SceneName.SCENE_HOME);
+    }
+
+    private void SetImageStar(float timePlayed)
+    {
+        foreach (Transform item in panelStar.transform)
+            item.GetComponent<Image>().sprite = spriteStar;
+
+        float max = LevelManager.Instance.GetDataLevel(tileSpawner.CurrentLevel).timeLimit;
+
+        if (timePlayed < max * 2 / 3)
+        {
+            panelStar.transform.GetChild(2).GetComponent<Image>().sprite = spriteNoneStar;
+        }
+
+        if (timePlayed < max / 3)
+        {
+            panelStar.transform.GetChild(1).GetComponent<Image>().sprite = spriteNoneStar;
+            panelStar.transform.GetChild(2).GetComponent<Image>().sprite = spriteNoneStar;
+        }
+    }
+
+    public IEnumerator DisplayPanelWin()
+    {
+        yield return new WaitForSeconds(.75f);
+        this.SetImageStar(timeManager.TimeLimit);
+        UIManager.instance.ShowPanel(EnumPanelType.LevelWin);
     }
 
     private void AnimBegin()

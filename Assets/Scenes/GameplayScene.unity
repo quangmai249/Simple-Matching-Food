@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 69008941}
   m_Layer: 0
   m_Name: GameplayScene
-  m_TagString: Untagged
+  m_TagString: GameplayScene
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -400,6 +400,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imgBG: {fileID: 1902077050}
   loading: {fileID: 1633802151}
+  panelStar: {fileID: 714158698}
+  spriteStar: {fileID: 21300048, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  spriteNoneStar: {fileID: 21300050, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
   txtLevel: {fileID: 1007102907}
   txtLevelCompleted: {fileID: 1488961107}
   txtLevelUncompleted: {fileID: 1604698475}
