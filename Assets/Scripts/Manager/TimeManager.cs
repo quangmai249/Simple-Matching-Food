@@ -34,11 +34,15 @@ public class TimeManager : MonoBehaviour
 
     public IEnumerator CoroutineRunTime(float timeStart)
     {
-        yield return new WaitForSeconds(timeStart + 1);
+        yield return new WaitForSeconds(timeStart);
+
+        AudioManager.Instance.PlayAudioClip(EnumAudioClip.Start);
 
         gameplay.IsStarted = true;
 
         _isRunTime = true;
+
+        GameManager.Instance.RestartGame();
 
         while (_isRunTime && _timeLimit > 0)
         {
@@ -54,6 +58,8 @@ public class TimeManager : MonoBehaviour
                 {
                     gameplay.IsLoseGame = true;
                     _isRunTime = false;
+
+                    AudioManager.Instance.PlayAudioClip(EnumAudioClip.Fail);
                     UIManager.instance.ShowPanel(EnumPanelType.LevelLose);
                 }
             }

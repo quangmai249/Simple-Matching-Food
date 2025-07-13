@@ -80,7 +80,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
         _isFlipped = !_isFlipped;
 
-        AudioManager.Instance.ClickedButton();
+        AudioManager.Instance.PlayAudioClip(EnumAudioClip.Clicked);
 
         this.Flip();
 

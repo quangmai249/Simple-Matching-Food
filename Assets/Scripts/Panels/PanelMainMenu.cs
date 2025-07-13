@@ -24,8 +24,13 @@ public class PanelMainMenu : MonoBehaviour
         _btnStart.onClick.AddListener(StartGame);
         _btnList.onClick.AddListener(ListMainMenu);
         _btnSettings.onClick.AddListener(Settings);
-
         _btnInformation.onClick.AddListener(Information);
+
+        _btnExit.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+        _btnList.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+        _btnSettings.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+        _btnStart.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButtonStart));
+        _btnInformation.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
     }
 
     private void Settings()

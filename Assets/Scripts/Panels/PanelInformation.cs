@@ -11,6 +11,7 @@ public class PanelInformation : MonoBehaviour
     private void Start()
     {
         _btnConfirm.onClick.AddListener(Confirm);
+        _btnConfirm.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
     }
     private void OnEnable()
     {

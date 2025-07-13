@@ -39,15 +39,13 @@ public class GameplayScene : MonoBehaviour
         tileSpawner = GameObject.FindGameObjectWithTag(TagName.TAG_TILE_SPAWNER).GetComponent<TileSpawner>();
         timeManager = GameObject.FindGameObjectWithTag(TagName.TAG_TIME_MANAGER).GetComponent<TimeManager>();
 
-        btnNextLevel.onClick.AddListener(NextLevel);
-        btnExit.onClick.AddListener(Exit);
-
-        btnReplay.onClick.AddListener(Replay);
-        btnExitLose.onClick.AddListener(Exit);
+        this.SetButtonDefault();
     }
 
     private IEnumerator Start()
     {
+        GameEvents.OnLevelChange.Raise(tileSpawner.CurrentLevel);
+
         UIManager.instance.ShowPanel(EnumPanelType.Loading);
 
         yield return new WaitForSeconds(2f);
@@ -62,9 +60,8 @@ public class GameplayScene : MonoBehaviour
         this.AnimBegin();
 
         timeManager.SetTimeLimit();
-        tileSpawner.StartCoroutine(tileSpawner.SetDefault(2f));
 
-        StartCoroutine(timeManager.CoroutineRunTime(2.5f));
+        yield return StartCoroutine(timeManager.CoroutineRunTime(2.5f));
     }
 
     private void OnEnable()
@@ -97,39 +94,49 @@ public class GameplayScene : MonoBehaviour
         }
     }
 
+    private void SetButtonDefault()
+    {
+        btnExit.onClick.AddListener(Exit);
+        btnReplay.onClick.AddListener(Replay);
+        btnExitLose.onClick.AddListener(Exit);
+        btnNextLevel.onClick.AddListener(NextLevel);
+
+        btnExit.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+        btnReplay.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+        btnExitLose.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+        btnNextLevel.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+    }
+
     private void NextLevel()
     {
         StartCoroutine(nameof(CoroutineNextLevel));
     }
 
+    private void Replay()
+    {
+        StartCoroutine(nameof(CoroutineReplay));
+    }
+
     private IEnumerator CoroutineNextLevel()
     {
-        timeManager.SetTimeLimit();
-
         UIManager.instance.ShowPanel(EnumPanelType.Loading);
 
         yield return new WaitForSeconds(3f);
 
-        GameObject.FindGameObjectWithTag(TagName.TAG_GAMEPLAY).GetComponent<Gameplay>()?.SetDefault();
-
-        UIManager.instance.ShowPanel(EnumPanelType.HUD);
-
-        GameManager.Instance.RestartGame(.5f);
-
-        StartCoroutine(timeManager.CoroutineRunTime(1f));
+        yield return StartCoroutine(CoroutineReplay());
     }
 
-    private void Replay()
+    private IEnumerator CoroutineReplay()
     {
-        timeManager.SetTimeLimit();
-
         GameObject.FindGameObjectWithTag(TagName.TAG_GAMEPLAY).GetComponent<Gameplay>()?.SetDefault();
 
         UIManager.instance.ShowPanel(EnumPanelType.HUD);
 
-        GameManager.Instance.RestartGame(.5f);
+        timeManager.SetTimeLimit();
+        GameManager.Instance.DisableAllTiles();
+        GameEvents.OnLevelChange.Raise(tileSpawner.CurrentLevel);
 
-        StartCoroutine(timeManager.CoroutineRunTime(1f));
+        yield return StartCoroutine(timeManager.CoroutineRunTime(1f));
     }
 
     private void Exit()
@@ -137,30 +144,52 @@ public class GameplayScene : MonoBehaviour
         SceneManager.LoadScene(SceneName.SCENE_HOME);
     }
 
-    private void SetImageStar(float timePlayed)
+    private void ResetImageStar()
     {
         foreach (Transform item in panelStar.transform)
-            item.GetComponent<Image>().sprite = spriteStar;
+            item.GetComponent<Image>().sprite = spriteNoneStar;
+    }
 
+    private IEnumerator SetImageStar(float timePlayed)
+    {
         float max = LevelManager.Instance.GetDataLevel(tileSpawner.CurrentLevel).timeLimit;
 
-        if (timePlayed < max * 2 / 3)
+        if (timePlayed >= max * 2 / 3)
         {
-            panelStar.transform.GetChild(2).GetComponent<Image>().sprite = spriteNoneStar;
+            foreach (Transform item in panelStar.transform)
+            {
+                yield return new WaitForSeconds(0.25f);
+                item.GetComponent<Image>().sprite = spriteStar;
+            }
         }
-
-        if (timePlayed < max / 3)
+        else if (timePlayed >= max / 3)
         {
-            panelStar.transform.GetChild(1).GetComponent<Image>().sprite = spriteNoneStar;
-            panelStar.transform.GetChild(2).GetComponent<Image>().sprite = spriteNoneStar;
+            yield return new WaitForSeconds(0.25f);
+            panelStar.transform.GetChild(0).GetComponent<Image>().sprite = spriteStar;
+            yield return new WaitForSeconds(0.25f);
+            panelStar.transform.GetChild(1).GetComponent<Image>().sprite = spriteStar;
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.25f);
+            panelStar.transform.GetChild(0).GetComponent<Image>().sprite = spriteStar;
         }
     }
 
     public IEnumerator DisplayPanelWin()
     {
+        this.ResetImageStar();
+
         yield return new WaitForSeconds(.75f);
-        this.SetImageStar(timeManager.TimeLimit);
+
+        AudioManager.Instance.StopSFX();
+        AudioManager.Instance.PlayAudioClip(EnumAudioClip.Win);
+
         UIManager.instance.ShowPanel(EnumPanelType.LevelWin);
+
+        yield return new WaitForSeconds(.75f);
+
+        yield return StartCoroutine(SetImageStar(timeManager.TimeLimit));
     }
 
     private void AnimBegin()

@@ -23,6 +23,10 @@ public class PanelSettings : MonoBehaviour
     {
         _btnCancel.onClick.AddListener(Cancel);
         _btnConfirm.onClick.AddListener(Confirm);
+
+        _btnCancel.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+        _btnConfirm.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+
         this.Register();
     }
 

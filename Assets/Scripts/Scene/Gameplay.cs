@@ -19,7 +19,6 @@ public class Gameplay : MonoBehaviour
     private Tile[] arr = new Tile[10];
 
     private TileSpawner tileSpawner;
-    private TimeManager timeManager;
     private GameplayScene gameplayScene;
 
     private void Start()
@@ -27,7 +26,6 @@ public class Gameplay : MonoBehaviour
         this.SetDefault();
 
         tileSpawner = GameObject.FindGameObjectWithTag(TagName.TAG_TILE_SPAWNER).GetComponent<TileSpawner>();
-        timeManager = GameObject.FindGameObjectWithTag(TagName.TAG_TIME_MANAGER).GetComponent<TimeManager>();
         gameplayScene = GameObject.FindGameObjectWithTag(SceneName.SCENE_GAMEPLAY).GetComponent<GameplayScene>();
     }
 
@@ -66,7 +64,7 @@ public class Gameplay : MonoBehaviour
 
     private IEnumerator CoroutineMatched()
     {
-        AudioManager.Instance.TileMatched();
+        AudioManager.Instance.PlayAudioClip(EnumAudioClip.Matched);
 
         for (int i = 0; i < _count_arr; i++)
         {
@@ -107,7 +105,6 @@ public class Gameplay : MonoBehaviour
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(() =>
                 {
-                    StopAllCoroutines();
                     StartCoroutine(gameplayScene.DisplayPanelWin());
                 });
         }
@@ -125,7 +122,7 @@ public class Gameplay : MonoBehaviour
         }
 
         if (!_isLoseGame)
-            AudioManager.Instance.TileNotMatched();
+            AudioManager.Instance.PlayAudioClip(EnumAudioClip.NotMatched);
 
         _count_arr = 0;
 
@@ -149,8 +146,9 @@ public class Gameplay : MonoBehaviour
     public void SetDefault()
     {
         _isStarted = false;
-        _isWinGame = false;
         _isChecking = false;
+        _isWinGame = false;
+        _isLoseGame = false;
         _count_arr = 0;
         _countTileMatched = 0;
     }

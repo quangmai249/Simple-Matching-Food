@@ -14,6 +14,9 @@ public class PanelExit : MonoBehaviour
     {
         _btnCancel.onClick.AddListener(Cancel);
         _btnConfirm.onClick.AddListener(Confirm);
+
+        _btnCancel.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+        _btnConfirm.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
     }
 
     private void OnEnable()

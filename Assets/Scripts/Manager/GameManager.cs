@@ -24,15 +24,12 @@ namespace Assets.Scrips.Manager
             base.OnDestroy();
         }
 
-        public void RestartGame(float timeSpawn)
+        public void RestartGame()
         {
             GameObject tileSpawner = GameObject.FindGameObjectWithTag(TagName.TAG_TILE_SPAWNER);
 
             if (tileSpawner != null)
-            {
-                this.DisableAllTiles();
-                StartCoroutine(tileSpawner.GetComponent<TileSpawner>().SetDefault(timeSpawn));
-            }
+                tileSpawner.GetComponent<TileSpawner>().SetDefault();
         }
 
         public void DisableAllTiles()

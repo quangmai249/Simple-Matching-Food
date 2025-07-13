@@ -913,7 +913,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1007,9 +1007,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce1c9420e1275845aac820e4c4d32e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clipClickedButton: {fileID: 8300000, guid: 21d1d40977a32a7449c1c47b318ca5cb, type: 3}
-  clipMatch: {fileID: 8300000, guid: cc6ea4d16af681f46af1e2c4a2aeac88, type: 3}
-  clipNotMatch: {fileID: 8300000, guid: 9c84df6eddb61c4469c3c120d6ea5127, type: 3}
+  clipBackgrounds:
+  - {fileID: 8300000, guid: 469e2841ce6de4844b670f9d7ac85616, type: 3}
+  - {fileID: 8300000, guid: f51cdc1151bcf474884dbb01ce0fcc32, type: 3}
+  - {fileID: 8300000, guid: 9e056acf4d268944b9a99d5d6c43197d, type: 3}
+  - {fileID: 8300000, guid: 89128d587fd14f44db9f45a26bab51c0, type: 3}
+  - {fileID: 8300000, guid: 7b6ef22b2f300f64abed5cd51977e6d6, type: 3}
+  - {fileID: 8300000, guid: eed4a5ce624221044b0ac50bd7baf341, type: 3}
+  - {fileID: 8300000, guid: ae8faf405803011439fc97b9aabb81b5, type: 3}
+  clipSFX:
+  - {fileID: 8300000, guid: 21d1d40977a32a7449c1c47b318ca5cb, type: 3}
+  - {fileID: 8300000, guid: 131d9204ed9579a438283818fef36583, type: 3}
+  - {fileID: 8300000, guid: 7e20505625591b94ca018d19283405e0, type: 3}
+  - {fileID: 8300000, guid: 73612355d444e5746b5e6184902d1699, type: 3}
+  - {fileID: 8300000, guid: cee913640212aed428b9c7e0bab79a51, type: 3}
+  - {fileID: 8300000, guid: 9c84df6eddb61c4469c3c120d6ea5127, type: 3}
+  - {fileID: 8300000, guid: 5ffddf6fb1b14204c807ffdcfd010571, type: 3}
+  - {fileID: 8300000, guid: e2a49dc63d4d16f46ae1b407d241f2f6, type: 3}
+  - {fileID: 8300000, guid: b009f1eda548fb040b39e36176ebdbf2, type: 3}
+  - {fileID: 8300000, guid: 3e700261ea1dfba46b9459daaa8312a6, type: 3}
   audioMusic: {fileID: 1266230091}
   audioSFX: {fileID: 1266230090}
 --- !u!4 &1266230093

@@ -14,6 +14,10 @@ public class PanelHUD : MonoBehaviour
     {
         _btnPause.onClick.AddListener(Pause);
         _btnResume.onClick.AddListener(Resume);
+
+        _btnPause.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+        _btnResume.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+
         gameplay = GameObject.FindGameObjectWithTag(TagName.TAG_GAMEPLAY).GetComponent<Gameplay>();
     }
 

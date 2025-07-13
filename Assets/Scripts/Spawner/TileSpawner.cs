@@ -29,14 +29,10 @@ public class TileSpawner : MonoBehaviour
         _level = 0;
     }
 
-    public IEnumerator SetDefault(float timeDisplayGrid)
+    public void SetDefault()
     {
-        GameEvents.OnLevelChange.Raise(_level);
 
         this.SetRandomTileLevel();
-
-        yield return new WaitForSeconds(timeDisplayGrid);
-
         this.SpawnTile();
     }
 
