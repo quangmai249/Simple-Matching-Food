@@ -10,27 +10,21 @@ public class HomeScene : MonoBehaviour
     [SerializeField] GameObject txtBG;
     [SerializeField] Image imgBG;
     [SerializeField] SpinBG spinBG;
-
-    private void Start()
+    private void Awake()
     {
         this.SetDefault();
         this.AnimBegin();
     }
-
-    public void StartGame()
+    private void OnDisable()
     {
-        UIManager.instance.HiddenPanel(EnumPanelType.MainMenu);
-        this.AnimStartGame();
+        DOTween.Clear(true);
     }
-
     private void SetDefault()
     {
-        UIManager.instance.HiddenPanel(EnumPanelType.MainMenu);
         txtBG.transform.localScale = Vector3.zero;
         imgBG.color = new Color(1, 1, 1, 0);
         imgBG.transform.localScale = Vector3.one * 10;
     }
-
     private void AnimBegin()
     {
         imgBG.DOFade(1f, 1f)
@@ -51,7 +45,6 @@ public class HomeScene : MonoBehaviour
                      });
           });
     }
-
     private void AnimStartGame()
     {
         txtBG.transform.DOScale(Vector3.zero, 1.5f)
@@ -74,13 +67,9 @@ public class HomeScene : MonoBehaviour
             });
         });
     }
-
-    private void OnDisable()
+    public void StartGame()
     {
-        DOTween.Clear(true);
-    }
-
-    private void OnDestroy()
-    {
+        UIManager.instance.HiddenPanel(EnumPanelType.MainMenu);
+        this.AnimStartGame();
     }
 }

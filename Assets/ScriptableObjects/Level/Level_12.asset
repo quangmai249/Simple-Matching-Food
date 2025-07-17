@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a583ca996ce2a4da35153b3c397c45, type: 3}
   m_Name: Level_12
   m_EditorClassIdentifier: 
-  levelName: Level 12
   matchingCount: 2
-  levelSize: {x: 6, y: 3}
-  timeLimit: 10
+  timeLimit: 300
+  levelName: Level 12
+  levelSize: {x: 5, y: 6}

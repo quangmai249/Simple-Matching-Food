@@ -20,25 +20,23 @@ public class Gameplay : MonoBehaviour
 
     private TileSpawner tileSpawner;
     private GameplayScene gameplayScene;
-
-    private void Start()
+    private void Awake()
     {
         this.SetDefault();
-
+    }
+    private void Start()
+    {
         tileSpawner = GameObject.FindGameObjectWithTag(TagName.TAG_TILE_SPAWNER).GetComponent<TileSpawner>();
         gameplayScene = GameObject.FindGameObjectWithTag(SceneName.SCENE_GAMEPLAY).GetComponent<GameplayScene>();
     }
-
     private void OnEnable()
     {
         GameEvents.OnTileSelected.Register(this.Selected);
     }
-
     private void OnDestroy()
     {
         GameEvents.OnTileSelected.Clear();
     }
-
     private void Selected(Tile tile)
     {
         arr[_count_arr] = tile;
@@ -61,7 +59,6 @@ public class Gameplay : MonoBehaviour
             }
         }
     }
-
     private IEnumerator CoroutineMatched()
     {
         AudioManager.Instance.PlayAudioClip(EnumAudioClip.Matched);
@@ -83,10 +80,10 @@ public class Gameplay : MonoBehaviour
             yield return StartCoroutine(nameof(this.WinGame));
         }
     }
-
     private IEnumerator WinGame()
     {
         _isWinGame = true;
+        _isStarted = false;
 
         tileSpawner.CurrentLevel++;
 
@@ -109,7 +106,6 @@ public class Gameplay : MonoBehaviour
                 });
         }
     }
-
     private IEnumerator CoroutineNotMatched()
     {
         yield return StartCoroutine(nameof(CoroutineShakeTile), 1f);
@@ -130,7 +126,6 @@ public class Gameplay : MonoBehaviour
 
         _isChecking = false;
     }
-
     private IEnumerator CoroutineShakeTile(float timeShake)
     {
         for (int i = 0; i < _count_arr; i++)
@@ -142,7 +137,6 @@ public class Gameplay : MonoBehaviour
             arr[i].GetComponent<Animator>().SetBool(KeyAnim.KEY_TILE_MATCH, false);
 
     }
-
     public void SetDefault()
     {
         _isStarted = false;
@@ -152,7 +146,6 @@ public class Gameplay : MonoBehaviour
         _count_arr = 0;
         _countTileMatched = 0;
     }
-
     private bool IsMatching(int countTileMatching)
     {
         Sprite t = arr[0].GetFrontImg();
@@ -161,7 +154,6 @@ public class Gameplay : MonoBehaviour
                 return false;
         return true;
     }
-
     public bool IsStarted { get => _isStarted; set => _isStarted = value; }
     public bool IsWinGame { get => _isWinGame; }
     public bool IsLoseGame { set => _isLoseGame = value; }

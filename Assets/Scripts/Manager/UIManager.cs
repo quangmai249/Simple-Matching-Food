@@ -11,9 +11,7 @@ namespace Assets.Scrips.Manager
     {
         public static UIManager instance;
 
-        private Transform _panelRoot;
         private Dictionary<EnumPanelType, GameObject> panels = new Dictionary<EnumPanelType, GameObject>();
-
         protected override void Awake()
         {
             if (instance != null && instance != this)
@@ -26,28 +24,28 @@ namespace Assets.Scrips.Manager
 
             this.Register();
         }
-
-        private void Start()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
         }
-
         private void Register()
         {
-            _panelRoot = GameObject.FindGameObjectWithTag(TagName.TAG_PANEL_ROOT).transform;
+            GameObject[] arr = GameObject.FindGameObjectsWithTag(TagName.TAG_PANEL_ROOT);
 
-            foreach (Transform child in _panelRoot)
+            foreach (GameObject item in arr)
             {
-                if (Enum.TryParse(child.name, out EnumPanelType enumPanelType))
-                    panels[enumPanelType] = child.gameObject;
+                foreach (Transform child in item.transform)
+                {
+                    if (Enum.TryParse(child.name, out EnumPanelType enumPanelType))
+                        panels[enumPanelType] = child.gameObject;
+                }
             }
         }
-
         public void HiddenPanel(EnumPanelType enumPanelType)
         {
             if (panels.TryGetValue(enumPanelType, out GameObject obj))
                 obj.SetActive(false);
         }
-
         public void ShowPanel(EnumPanelType enumPanelType)
         {
             foreach (var item in panels)
@@ -61,10 +59,12 @@ namespace Assets.Scrips.Manager
             else
                 Debug.Log($"do not show bc not found {enumPanelType}");
         }
-
-        protected override void OnDestroy()
+        public GameObject GetPanel(EnumPanelType enumPanelType)
         {
-            base.OnDestroy();
+            if (panels.TryGetValue(enumPanelType, out GameObject obj))
+                return obj;
+
+            return null;
         }
     }
 }

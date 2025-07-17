@@ -12,12 +12,18 @@ public class SaveManager : Singleton<SaveManager>
     {
         base.Awake();
     }
-
-    private IEnumerator Start()
+    private void Start()
+    {
+        StartCoroutine(nameof(SetLocalizationSettings));
+    }
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+    }
+    private IEnumerator SetLocalizationSettings()
     {
         yield return LocalizationSettings.InitializationOperation;
     }
-
     public void ChangeLanguage()
     {
         if (this.GetDataSetting() != null)
@@ -28,17 +34,6 @@ public class SaveManager : Singleton<SaveManager>
 
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[0];
     }
-
-    public DataSetting GetDataSetting()
-    {
-        DataSetting dataSetting = JsonUtility.FromJson<DataSetting>(PlayerPrefs.GetString(KeyData.DATA_SETTING));
-
-        if (dataSetting == null)
-            return new DataSetting(.5f, .5f, EnumLanguages.English);
-
-        return dataSetting;
-    }
-
     public void SaveDataSetting(float sfx, float music, string language)
     {
         if (Enum.TryParse(language, out EnumLanguages enumLanguages))
@@ -50,9 +45,13 @@ public class SaveManager : Singleton<SaveManager>
             PlayerPrefs.Save();
         }
     }
-
-    protected override void OnDestroy()
+    public DataSetting GetDataSetting()
     {
-        base.OnDestroy();
+        DataSetting dataSetting = JsonUtility.FromJson<DataSetting>(PlayerPrefs.GetString(KeyData.DATA_SETTING));
+
+        if (dataSetting == null)
+            return new DataSetting(.5f, .5f, EnumLanguages.English);
+
+        return dataSetting;
     }
 }

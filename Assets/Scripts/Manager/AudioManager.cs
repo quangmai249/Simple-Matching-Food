@@ -14,21 +14,16 @@ public class AudioManager : Singleton<AudioManager>
     private float _music;
     private DataSetting _dataSetting;
     private Dictionary<EnumAudioClip, AudioClip> dic = new Dictionary<EnumAudioClip, AudioClip>();
-
     protected override void Awake()
     {
         base.Awake();
-
         this.Register();
     }
-
     private void Start()
     {
         _dataSetting = SaveManager.Instance.GetDataSetting();
-
         this.SetVolume(_dataSetting.sfx, _dataSetting.music);
     }
-
     private void Update()
     {
         if (!audioMusic.isPlaying)
@@ -37,7 +32,10 @@ public class AudioManager : Singleton<AudioManager>
             audioMusic.Play();
         }
     }
-
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+    }
     private void Register()
     {
         foreach (AudioClip item in clipSFX)
@@ -46,28 +44,20 @@ public class AudioManager : Singleton<AudioManager>
                 dic[enumAudioClip] = item;
         }
     }
-
+    public void StopSFX()
+    {
+        audioSFX.Stop();
+    }
+    public void SetVolume(float sfx, float music)
+    {
+        audioSFX.volume = sfx;
+        audioMusic.volume = music;
+    }
     public void PlayAudioClip(EnumAudioClip enumAudioClip)
     {
         if (dic.TryGetValue(enumAudioClip, out AudioClip audioClip))
             audioSFX.PlayOneShot(audioClip);
         else
             Debug.LogWarning($"Audio clip {enumAudioClip} not found in dictionary.");
-    }
-
-    public void StopSFX()
-    {
-        audioSFX.Stop();
-    }
-
-    public void SetVolume(float sfx, float music)
-    {
-        audioSFX.volume = sfx;
-        audioMusic.volume = music;
-    }
-
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
     }
 }

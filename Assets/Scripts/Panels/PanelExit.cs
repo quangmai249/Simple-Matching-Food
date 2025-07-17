@@ -9,8 +9,15 @@ public class PanelExit : MonoBehaviour
 {
     [SerializeField] Button _btnConfirm;
     [SerializeField] Button _btnCancel;
-
-    void Start()
+    private void Awake()
+    {
+        this.SetButtons();
+    }
+    private void OnEnable()
+    {
+        SaveManager.Instance.ChangeLanguage();
+    }
+    private void SetButtons()
     {
         _btnCancel.onClick.AddListener(Cancel);
         _btnConfirm.onClick.AddListener(Confirm);
@@ -18,17 +25,10 @@ public class PanelExit : MonoBehaviour
         _btnCancel.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
         _btnConfirm.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
     }
-
-    private void OnEnable()
-    {
-        SaveManager.Instance.ChangeLanguage();
-    }
-
     private void Confirm()
     {
         Application.Quit();
     }
-
     private void Cancel()
     {
         UIManager.instance.ShowPanel(EnumPanelType.MainMenu);

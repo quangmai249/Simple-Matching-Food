@@ -20,23 +20,13 @@ public class TileSpawner : MonoBehaviour
 
     private Queue<int> queue = new Queue<int>();
 
-    // Grid properties
     private Vector2 gridCellSizeDF, gridSpacingDF;
     private RectOffset gridPaddingDF;
-
-    private void Start()
+    private void Awake()
     {
         _level = 0;
     }
-
-    public void SetDefault()
-    {
-
-        this.SetRandomTileLevel();
-        this.SpawnTile();
-    }
-
-    private void SetRandomTileLevel()
+    private void SetTileLevel()
     {
         _col = (int)LevelManager.Instance.GetDataLevel(_level).levelSize.x;
         _row = (int)LevelManager.Instance.GetDataLevel(_level).levelSize.y;
@@ -78,7 +68,6 @@ public class TileSpawner : MonoBehaviour
         else if (_gridTileGroup.GetComponent<GridLayoutGroup>().cellSize != this.gridCellSizeDF)
             this.DefaultReponsiveGrid();
     }
-
     private void SpawnTile()
     {
         _gridTileGroup.GetComponent<GridLayoutGroup>().constraint = GridLayoutGroup.Constraint.FixedColumnCount;
@@ -92,7 +81,28 @@ public class TileSpawner : MonoBehaviour
             SetSpriteImageTile();
         }
     }
+    private void SetSpriteImageTile()
+    {
+        _tile.GetComponent<Tile>().SetBackImg(lsBackImg[0]);
+        _tile.GetComponent<Tile>().SetFrontImg(lsFrontImg[queue.Dequeue()]);
+    }
+    private void DefaultReponsiveGrid()
+    {
+        _gridTileGroup.GetComponent<GridLayoutGroup>().cellSize = this.gridCellSizeDF;
+        _gridTileGroup.GetComponent<GridLayoutGroup>().spacing = this.gridSpacingDF;
+        _gridTileGroup.GetComponent<GridLayoutGroup>().padding = this.gridPaddingDF;
+    }
+    public IEnumerator SetDefault(float timeDelay)
+    {
+        GameManager.Instance.DisableAllTiles();
 
+        GameEvents.OnLevelChange.Raise(_level);
+
+        yield return new WaitForSeconds(timeDelay);
+
+        this.SetTileLevel();
+        this.SpawnTile();
+    }
     private void ShuffleArray(int[] array)
     {
         for (int i = array.Length - 1; i > 0; i--)
@@ -101,13 +111,6 @@ public class TileSpawner : MonoBehaviour
             (array[i], array[j]) = (array[j], array[i]);
         }
     }
-
-    private void SetSpriteImageTile()
-    {
-        _tile.GetComponent<Tile>().SetBackImg(lsBackImg[0]);
-        _tile.GetComponent<Tile>().SetFrontImg(lsFrontImg[queue.Dequeue()]);
-    }
-
     private void ReponsiveGrid(int columns, int rows)
     {
         _gridTileGroup = GameObject.FindGameObjectWithTag(TagName.TAG_GRID_TILE_GROUP);
@@ -129,48 +132,34 @@ public class TileSpawner : MonoBehaviour
             Mathf.RoundToInt(padding.y)
         );
     }
-
-    private void DefaultReponsiveGrid()
+    public Vector2 GridCellSizeDF
     {
-        _gridTileGroup.GetComponent<GridLayoutGroup>().cellSize = this.gridCellSizeDF;
-        _gridTileGroup.GetComponent<GridLayoutGroup>().spacing = this.gridSpacingDF;
-        _gridTileGroup.GetComponent<GridLayoutGroup>().padding = this.gridPaddingDF;
+        set => gridCellSizeDF = value;
     }
-
-    public int CurrentLevel
+    public Vector2 GridSpacingDF
     {
-        get => _level;
-        set => _level = value;
+        set => gridSpacingDF = value;
     }
-
-    public int CountMatching
-    {
-        get => _countMatching;
-    }
-
     public GameObject GridTileGroup
     {
         get => _gridTileGroup;
         set => _gridTileGroup = value;
     }
-
-    public Vector2 GridCellSizeDF
-    {
-        set => gridCellSizeDF = value;
-    }
-
-    public Vector2 GridSpacingDF
-    {
-        set => gridSpacingDF = value;
-    }
-
     public RectOffset GridPaddingDF
     {
         set => gridPaddingDF = value;
     }
-
     public int MaxTile
     {
         get => _maxTile;
+    }
+    public int CurrentLevel
+    {
+        get => _level;
+        set => _level = value;
+    }
+    public int CountMatching
+    {
+        get => _countMatching;
     }
 }

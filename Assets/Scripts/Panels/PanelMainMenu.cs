@@ -17,8 +17,25 @@ public class PanelMainMenu : MonoBehaviour
     [SerializeField] GameObject _panelMainMenu;
 
     private HomeScene homeScene;
-
     private void Awake()
+    {
+        this.SetButtons();
+    }
+    private void Start()
+    {
+        homeScene = GameObject.FindGameObjectWithTag(TagName.TAG_HOME_SCENE).GetComponent<HomeScene>();
+
+        _panelMainMenu.SetActive(false);
+    }
+    private void Settings()
+    {
+        UIManager.instance.ShowPanel(EnumPanelType.Settings);
+    }
+    private void Exit()
+    {
+        UIManager.instance.ShowPanel(EnumPanelType.Exit);
+    }
+    private void SetButtons()
     {
         _btnExit.onClick.AddListener(Exit);
         _btnStart.onClick.AddListener(StartGame);
@@ -32,34 +49,10 @@ public class PanelMainMenu : MonoBehaviour
         _btnStart.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButtonStart));
         _btnInformation.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
     }
-
-    private void Settings()
-    {
-        UIManager.instance.ShowPanel(EnumPanelType.Settings);
-    }
-
-    private void Exit()
-    {
-        UIManager.instance.ShowPanel(EnumPanelType.Exit);
-    }
-
-    private void Start()
-    {
-        homeScene = GameObject.FindGameObjectWithTag(TagName.TAG_HOME_SCENE).GetComponent<HomeScene>();
-
-        _panelMainMenu.SetActive(false);
-    }
-
-    private void OnDisable()
-    {
-
-    }
-
     private void Information()
     {
         UIManager.instance.ShowPanel(EnumPanelType.Information);
     }
-
     private void ListMainMenu()
     {
         _panelMainMenu.SetActive(!_panelMainMenu.activeSelf);
@@ -72,13 +65,10 @@ public class PanelMainMenu : MonoBehaviour
         else
             _btnList.image.color = new Color(1, 1, 1, 1);
     }
-
     private void StartGame()
     {
         UIManager.instance.ShowPanel(EnumPanelType.MainMenu);
 
         homeScene.StartGame();
-
-        //SceneManager.LoadScene(SceneName.SCENE_GAMEPLAY);
     }
 }

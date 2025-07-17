@@ -17,23 +17,22 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     private RectTransform _rt;
     private Gameplay gameplay;
-
-    private void Start()
+    private void Awake()
     {
         _img = GetComponent<Image>();
-
+        _rt = transform as RectTransform;
+        this.SetDefault();
+    }
+    private void Start()
+    {
         gameplay = GameObject.FindGameObjectWithTag(TagName.TAG_GAMEPLAY).GetComponent<Gameplay>();
 
         this.SetDefault();
-
-        _rt = transform as RectTransform;
     }
-
     private void OnDisable()
     {
         DOTween.Kill(_rt);
     }
-
     public void SetDefault()
     {
         _isFlipped = false;
@@ -42,7 +41,6 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         _img.sprite = _backImg;
         _img.color = Color.white;
     }
-
     public void Flip()
     {
         if (_isFlipped)
@@ -64,7 +62,6 @@ public class Tile : MonoBehaviour, IPointerClickHandler
             }).SetAutoKill(true);
         }
     }
-
     public void OnPointerClick(PointerEventData eventData)
     {
         if (GameManager.Instance.IsPaused || !gameplay.IsStarted || gameplay.IsWinGame)
@@ -86,22 +83,18 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
         GameEvents.OnTileSelected.Raise(this);
     }
-
     public void SetFrontImg(Sprite sprite)
     {
         _frontImg = sprite;
     }
-
     public void SetBackImg(Sprite sprite)
     {
         _backImg = sprite;
     }
-
     public Sprite GetFrontImg()
     {
         return _frontImg;
     }
-
     public bool IsFlipped { get => _isFlipped; set => _isFlipped = value; }
     public bool IsMatched { get => _isMatched; set => _isMatched = value; }
     public bool IsChecking { get => _isChecking; set => _isChecking = value; }

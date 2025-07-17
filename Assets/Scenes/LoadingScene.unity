@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1116,7 +1116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a0cf68c474833048abc2f44d6fdfcf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePoolSize: 4
+  tilePoolSize: 100
   tilePrefab: {fileID: 2584917816935348572, guid: d5452326867502f40a991c0b1efb1ef2, type: 3}
 --- !u!4 &1661085501
 Transform:
@@ -1216,7 +1216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8039216, g: 0.9254902, b: 0.9490196, a: 1}
+  m_Color: {r: 0.8235294, g: 0.92941177, b: 0.9411765, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1377,7 +1377,7 @@ Canvas:
   m_GameObject: {fileID: 2033668037}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1388,7 +1388,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1729538719
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &2033668041

@@ -12,41 +12,21 @@ public class SpinBG : MonoBehaviour
     private float _maxValScaleDf;
 
     private GameObject _spinBG;
-
-    private void Awake()
-    {
-        _spinBG = GameObject.FindGameObjectWithTag(TagName.TAG_BACKGROUND);
-    }
-
-    private void OnEnable()
-    {
-    }
-
-    private void OnDisable()
-    {
-    }
-
-    private void OnDestroy()
-    {
-    }
-
     private void Start()
     {
+        _spinBG = GameObject.FindGameObjectWithTag(TagName.TAG_BACKGROUND);
         _valScaleDf = _spinBG.transform.localScale.x;
         _maxValScaleDf = _valScaleDf * 2;
     }
-
     private void Update()
     {
         this.Spin();
         this.Zoom();
     }
-
     private void Spin()
     {
         _spinBG.transform.Rotate(new Vector3(0, 0, Time.deltaTime * spinSpeed));
     }
-
     private void Zoom()
     {
         if (_spinBG.transform.localScale.x < _valScaleDf)
@@ -58,11 +38,5 @@ public class SpinBG : MonoBehaviour
             _spinBG.transform.localScale += Vector3.one * Time.deltaTime * zoomSpeed;
         else
             _spinBG.transform.localScale -= Vector3.one * Time.deltaTime * zoomSpeed;
-    }
-
-    public float MaxValScaleDf
-    {
-        get => _maxValScaleDf;
-        set => _maxValScaleDf = value;
     }
 }

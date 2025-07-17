@@ -51,6 +51,10 @@ MonoBehaviour:
     m_Key: txt_win
     m_Metadata:
       m_Items: []
+  - m_Id: 6287537642557440
+    m_Key: txt_display_name
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

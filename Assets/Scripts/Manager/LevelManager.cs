@@ -7,12 +7,18 @@ namespace Assets.Scrips.Manager
     public class LevelManager : Singleton<LevelManager>
     {
         [SerializeField] List<DataLevel> dataLevel = new List<DataLevel>();
-
         protected override void Awake()
         {
             base.Awake();
         }
-
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+        }
+        public int GetMaxLevel()
+        {
+            return dataLevel.Count;
+        }
         public DataLevel GetDataLevel(int level)
         {
             if (level < 0 || level > dataLevel.Count)
@@ -21,16 +27,6 @@ namespace Assets.Scrips.Manager
                 return null;
             }
             return dataLevel[level];
-        }
-
-        public int GetMaxLevel()
-        {
-            return dataLevel.Count;
-        }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
         }
     }
 }
