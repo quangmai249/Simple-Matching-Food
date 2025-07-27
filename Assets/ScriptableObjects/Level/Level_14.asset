@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level_14
   m_EditorClassIdentifier: 
   matchingCount: 2
-  timeLimit: 360
+  timeLimit: 180
   levelName: Level 14
   levelSize: {x: 6, y: 6}

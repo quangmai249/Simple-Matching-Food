@@ -4,6 +4,8 @@ public enum EnumPanelType
     MainMenu,
     Settings,
     Pause,
+    Stage,
+    SelectLevel,
     HUD,
     LevelWin,
     LevelLose,

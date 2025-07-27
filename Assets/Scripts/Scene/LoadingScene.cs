@@ -32,7 +32,7 @@ public class LoadingScene : MonoBehaviour
             return;
         }
 
-        if (!_isLoadingFailed && _isReady && timeLoading >= 3.5f)
+        if (!_isLoadingFailed && _isReady && timeLoading >= 3.25f)
         {
             SceneManager.LoadScene(SceneName.SCENE_HOME);
             return;

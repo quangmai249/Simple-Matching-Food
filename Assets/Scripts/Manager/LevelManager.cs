@@ -1,32 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Assets.Scrips.Manager
 {
     public class LevelManager : Singleton<LevelManager>
     {
-        [SerializeField] List<DataLevel> dataLevel = new List<DataLevel>();
+        [SerializeField] List<DataLevel> lsDataLevel = new List<DataLevel>();
+
+        private int _countLevel;
+
+        private DataLevel _dataLevel;
+        private DataLevelSaving _dataLevelSaving;
+        private Dictionary<Level, DataLevel> dic = new Dictionary<Level, DataLevel>();
         protected override void Awake()
         {
             base.Awake();
+        }
+        private void Start()
+        {
+            SaveManager.Instance.DeleteAllKeyData();
+
+            _dataLevelSaving = SaveManager.Instance.GetDataLevelSaving();
+            _countLevel = _dataLevelSaving.levels.Length;
         }
         protected override void OnDestroy()
         {
             base.OnDestroy();
         }
-        public int GetMaxLevel()
+        public Level[] GetDataLevelSaving()
         {
-            return dataLevel.Count;
+            return _dataLevelSaving.levels;
         }
-        public DataLevel GetDataLevel(int level)
+        public List<DataLevel> GetListDataLevel
         {
-            if (level < 0 || level > dataLevel.Count)
-            {
-                Debug.LogError("Level index out of range: " + level);
-                return null;
-            }
-            return dataLevel[level];
+            get => lsDataLevel;
+        }
+        public DataLevel DataLevel
+        {
+            get => _dataLevel;
+            set => _dataLevel = value;
         }
     }
 }

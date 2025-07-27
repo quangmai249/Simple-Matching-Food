@@ -24,9 +24,11 @@ public class GameplayScene : MonoBehaviour
 
     private TileSpawner tileSpawner;
     private TimeManager timeManager;
+    private DataLevel datalevel;
     private void Awake()
     {
         this.SetButtons();
+        datalevel = LevelManager.Instance.DataLevel;
     }
     private void Start()
     {
@@ -35,7 +37,7 @@ public class GameplayScene : MonoBehaviour
         tileSpawner = GameObject.FindGameObjectWithTag(TagName.TAG_TILE_SPAWNER).GetComponent<TileSpawner>();
         timeManager = GameObject.FindGameObjectWithTag(TagName.TAG_TIME_MANAGER).GetComponent<TimeManager>();
 
-        GameEvents.OnLevelChange.Raise(tileSpawner.CurrentLevel);
+        GameEvents.OnLevelChange.Raise(datalevel.levelName);
 
         StartCoroutine(nameof(CoroutineStartGame));
     }
@@ -69,22 +71,14 @@ public class GameplayScene : MonoBehaviour
                 .SetEase(Ease.InSine);
             });
     }
-    private void OnLevelChanged(int level)
+    private void OnLevelChanged(string name)
     {
-        txtLevel.text = LevelManager.Instance.GetDataLevel(level).levelName;
+        txtLevel.text = name;
     }
-    private void OnLeveCompleted(int level)
+    private void OnLeveCompleted(string name)
     {
-        if (level >= 0)
-        {
-            txtLevelCompleted.text = LevelManager.Instance.GetDataLevel(level).levelName;
-            txtLevelUncompleted.text = LevelManager.Instance.GetDataLevel(level).levelName;
-        }
-        else
-        {
-            txtLevelCompleted.text = null;
-            txtLevelUncompleted.text = null;
-        }
+        txtLevelCompleted.text = name;
+        txtLevelUncompleted.text = name;
     }
     private IEnumerator CoroutineReplay()
     {

@@ -85,8 +85,6 @@ public class Gameplay : MonoBehaviour
         _isWinGame = true;
         _isStarted = false;
 
-        tileSpawner.CurrentLevel++;
-
         foreach (GameObject item in GameObject.FindGameObjectsWithTag(TagName.TAG_TILE))
             item.GetComponent<Image>().color = new Color(1, 1, 1, 1);
 
@@ -102,9 +100,13 @@ public class Gameplay : MonoBehaviour
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(() =>
                 {
-                    StartCoroutine(gameplayScene.DisplayPanelWin());
+                    StartCoroutine(nameof(UnlockNextLevel));
                 });
         }
+    }
+    private IEnumerator UnlockNextLevel()
+    {
+        yield return StartCoroutine(gameplayScene.DisplayPanelWin());
     }
     private IEnumerator CoroutineNotMatched()
     {

@@ -48,7 +48,7 @@ public class TimeManager : MonoBehaviour
     }
     public void SetTimeLimit()
     {
-        _timeLimit = LevelManager.Instance.GetDataLevel(tileSpawner.CurrentLevel).timeLimit;
+        _timeLimit = LevelManager.Instance.DataLevel.timeLimit;
         sliderTimeLimit.maxValue = _timeLimit;
 
         GameEvents.OnTimeLimitChange.Raise(_timeLimit);
@@ -87,6 +87,6 @@ public class TimeManager : MonoBehaviour
     }
     public float MaxTimeLimit
     {
-        get => LevelManager.Instance.GetDataLevel(tileSpawner.CurrentLevel).timeLimit;
+        get => LevelManager.Instance.DataLevel.timeLimit;
     }
 }

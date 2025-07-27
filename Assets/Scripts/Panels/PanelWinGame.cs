@@ -54,7 +54,7 @@ public class PanelWinGame : MonoBehaviour
         float maxTime = timeManager.MaxTimeLimit;
         float timeRemaning = timeManager.TimeLimit;
 
-        if (timeRemaning >= 2 * maxTime / 3)
+        if (timeRemaning >= maxTime * (2 / 3))
         {
             yield return new WaitForSeconds(0.15f);
             panelStar.transform.GetChild(0).GetComponent<Image>().sprite = spriteStar;
@@ -63,7 +63,7 @@ public class PanelWinGame : MonoBehaviour
             yield return new WaitForSeconds(0.35f);
             panelStar.transform.GetChild(2).GetComponent<Image>().sprite = spriteStar;
         }
-        else if (timeRemaning >= maxTime / 3)
+        else if (timeRemaning >= maxTime * (1 / 3))
         {
             yield return new WaitForSeconds(0.15f);
             panelStar.transform.GetChild(0).GetComponent<Image>().sprite = spriteStar;
@@ -75,8 +75,6 @@ public class PanelWinGame : MonoBehaviour
             yield return new WaitForSeconds(0.15f);
             panelStar.transform.GetChild(0).GetComponent<Image>().sprite = spriteStar;
         }
-
-        yield return new WaitForSeconds(.25f);
         panelButtons.SetActive(true);
     }
 }

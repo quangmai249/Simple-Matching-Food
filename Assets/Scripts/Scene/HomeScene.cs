@@ -62,7 +62,7 @@ public class HomeScene : MonoBehaviour
                 .SetEase(Ease.InSine)
                 .OnComplete(() =>
                 {
-                    SceneManager.LoadScene(SceneName.SCENE_GAMEPLAY);
+                    SceneManager.LoadScene(SceneName.SCENE_LEVEL);
                 });
             });
         });

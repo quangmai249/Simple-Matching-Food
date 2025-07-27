@@ -14,24 +14,18 @@ public class TileSpawner : MonoBehaviour
 
     private int _row, _col, _maxTile, _maxSprite, _countMatching;
 
-    private int _level;
-
     private GameObject _tile, _gridTileGroup;
 
     private Queue<int> queue = new Queue<int>();
 
     private Vector2 gridCellSizeDF, gridSpacingDF;
     private RectOffset gridPaddingDF;
-    private void Awake()
-    {
-        _level = 0;
-    }
     private void SetTileLevel()
     {
-        _col = (int)LevelManager.Instance.GetDataLevel(_level).levelSize.x;
-        _row = (int)LevelManager.Instance.GetDataLevel(_level).levelSize.y;
+        _col = (int)LevelManager.Instance.DataLevel.levelSize.x;
+        _row = (int)LevelManager.Instance.DataLevel.levelSize.y;
 
-        _countMatching = LevelManager.Instance.GetDataLevel(_level).matchingCount;
+        _countMatching = LevelManager.Instance.DataLevel.matchingCount;
 
         _maxTile = _col * _row;
 
@@ -96,7 +90,7 @@ public class TileSpawner : MonoBehaviour
     {
         GameManager.Instance.DisableAllTiles();
 
-        GameEvents.OnLevelChange.Raise(_level);
+        GameEvents.OnLevelChange.Raise(LevelManager.Instance.DataLevel.levelName);
 
         yield return new WaitForSeconds(timeDelay);
 
@@ -152,11 +146,6 @@ public class TileSpawner : MonoBehaviour
     public int MaxTile
     {
         get => _maxTile;
-    }
-    public int CurrentLevel
-    {
-        get => _level;
-        set => _level = value;
     }
     public int CountMatching
     {
