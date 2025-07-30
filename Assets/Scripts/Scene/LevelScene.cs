@@ -1,6 +1,8 @@
 using Assets.Scrips.Manager;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,10 +12,7 @@ public class LevelScene : MonoBehaviour
 {
     [SerializeField] GameObject panelLevel;
     [SerializeField] GameObject panelSelectLevel;
-    [SerializeField] GameObject buttonLevel;
 
-    private GameObject _btn;
-    private List<DataLevel> lsDataLevel = new List<DataLevel>();
     private Dictionary<GameObject, DataLevel> dic = new Dictionary<GameObject, DataLevel>();
     private void Start()
     {
@@ -22,26 +21,24 @@ public class LevelScene : MonoBehaviour
     }
     private void SetButtonLevel()
     {
-        lsDataLevel = LevelManager.Instance.GetListDataLevel;
+        dic = LevelManager.Instance.DicDataLevel;
 
-        foreach (var item in lsDataLevel)
-        {
-            _btn = Instantiate(buttonLevel);
-
-            _btn.name = item.levelName;
-            _btn.gameObject.transform.SetParent(panelLevel.transform);
-            _btn.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = item.levelName.Replace("Level ", "");
-
-            dic[_btn] = item;
-        }
+        foreach (var item in dic.Keys)
+            item.gameObject.transform.SetParent(panelLevel.transform);
 
         foreach (var item in dic)
         {
+            if (IsUnlocked(item.Value.levelName))
+                item.Value.isUnlocked = true;
+
             item.Key.GetComponent<ButtonLevel>().Data = item.Value;
+
             item.Key.GetComponent<ButtonLevel>().SetDefault();
 
             item.Key.GetComponent<Button>().onClick.AddListener(() => SetDataLevel(item.Key));
             item.Key.GetComponent<Button>().onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+
+            item.Key.gameObject.SetActive(true);
         }
     }
     private void SetDataLevel(GameObject btn)
@@ -51,5 +48,13 @@ public class LevelScene : MonoBehaviour
         LevelManager.Instance.DataLevel = btn.GetComponent<ButtonLevel>().Data;
 
         panelSelectLevel.GetComponent<PanelSelectLevel>().TextLevelName = LevelManager.Instance.DataLevel.levelName;
+    }
+    private bool IsUnlocked(string levelName)
+    {
+        foreach (var item in LevelManager.Instance.HashSetLevelUnLocked)
+            if (levelName == item)
+                return true;
+
+        return false;
     }
 }

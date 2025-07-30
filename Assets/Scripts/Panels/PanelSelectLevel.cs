@@ -19,12 +19,14 @@ public class PanelSelectLevel : MonoBehaviour
     private void SetDefault()
     {
         btnPlay.onClick.AddListener(StartPlay);
-        btnPlay.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButtonStart));
     }
     private void StartPlay()
     {
-        btnPlay.GetComponent<Image>().DOFade(0f, 1f).OnComplete(() =>
+        btnPlay.GetComponent<Image>().DOFade(0f, .15f).OnComplete(() =>
         {
+            foreach (var item in LevelManager.Instance.DicDataLevel)
+                LevelManager.Instance.Pool.ReturnToPool(item.Key, LevelManager.Instance.gameObject);
+
             SceneManager.LoadScene(SceneName.SCENE_GAMEPLAY);
         });
     }

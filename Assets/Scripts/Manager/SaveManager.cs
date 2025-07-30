@@ -53,17 +53,14 @@ public class SaveManager : Singleton<SaveManager>
         }
 
         dataLevelSaving = new DataLevelSaving();
-        dataLevelSaving.levels = new Level[_countLevel];
+        dataLevelSaving.levels = new List<Level>();
 
         PlayerPrefs.SetString(KeyData.DATA_LEVEL, JsonUtility.ToJson(dataLevelSaving, true));
         _jsonDataLevel = PlayerPrefs.GetString(KeyData.DATA_LEVEL);
 
         dataLevelSaving = JsonUtility.FromJson<DataLevelSaving>(_jsonDataLevel);
 
-        for (int i = 0; i < _countLevel; i++)
-            dataLevelSaving.levels[i] = new Level(false, 0, lsDatalevel[i].levelName);
-
-        dataLevelSaving.levels[0].isUnlocked = true;
+        dataLevelSaving.levels.Add(new Level(0, "Level 1"));
 
         this.SaveAllDataLevel(dataLevelSaving);
 
@@ -100,9 +97,9 @@ public class SaveManager : Singleton<SaveManager>
             PlayerPrefs.Save();
         }
     }
-    public void SaveDataLevel(int index, Level level)
+    public void SaveDataLevel(Level level)
     {
-        dataLevelSaving.levels[index] = level;
+        dataLevelSaving.levels.Add(level);
         this.SaveAllDataLevel(dataLevelSaving);
     }
     public DataSetting GetDataSetting()
@@ -121,6 +118,9 @@ public class SaveManager : Singleton<SaveManager>
         {
             Debug.Log("DataSavingLevel was empty!");
             dataLevelSaving = this.DataLevelSavingDefault();
+
+            this.GetDataLevelSaving();
+
             return dataLevelSaving;
         }
 

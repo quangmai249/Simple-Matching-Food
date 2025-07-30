@@ -6,5 +6,5 @@ using UnityEngine;
 [System.Serializable]
 public class DataLevelSaving
 {
-    public Level[] levels;
+    public List<Level> levels;
 }

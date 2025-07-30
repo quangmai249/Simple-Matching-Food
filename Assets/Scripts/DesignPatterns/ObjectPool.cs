@@ -35,4 +35,8 @@ public class ObjectPool : IPooledObject
     {
         get => _pool.Count;
     }
+    public Queue<GameObject> Pool
+    {
+        get => _pool;
+    }
 }

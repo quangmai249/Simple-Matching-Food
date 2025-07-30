@@ -17,6 +17,7 @@ TagManager:
   - TimeManager
   - GameplayScene
   - FxTemporaire
+  - LevelScene
   layers:
   - Default
   - TransparentFX
