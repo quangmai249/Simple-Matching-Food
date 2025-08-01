@@ -27,11 +27,6 @@ public class SaveManager : Singleton<SaveManager>
     {
         base.OnDestroy();
     }
-    private void SaveAllDataLevel(DataLevelSaving dataLevelSaving)
-    {
-        PlayerPrefs.SetString(KeyData.DATA_LEVEL, JsonUtility.ToJson(dataLevelSaving, true));
-        PlayerPrefs.Save();
-    }
     private IEnumerator SetLocalizationSettings()
     {
         yield return LocalizationSettings.InitializationOperation;
@@ -99,8 +94,22 @@ public class SaveManager : Singleton<SaveManager>
     }
     public void SaveDataLevel(Level level)
     {
+        foreach (var item in dataLevelSaving.levels)
+        {
+            if (item.levelName == level.levelName)
+            {
+                dataLevelSaving.levels.Remove(item);
+                break;
+            }
+        }
+
         dataLevelSaving.levels.Add(level);
         this.SaveAllDataLevel(dataLevelSaving);
+    }
+    public void SaveAllDataLevel(DataLevelSaving dataLevelSaving)
+    {
+        PlayerPrefs.SetString(KeyData.DATA_LEVEL, JsonUtility.ToJson(dataLevelSaving, true));
+        PlayerPrefs.Save();
     }
     public DataSetting GetDataSetting()
     {
@@ -127,5 +136,15 @@ public class SaveManager : Singleton<SaveManager>
         dataLevelSaving = JsonUtility.FromJson<DataLevelSaving>(PlayerPrefs.GetString(KeyData.DATA_LEVEL));
 
         return dataLevelSaving;
+    }
+    public Level GetLevelFromDataLevelSaving(string levelName)
+    {
+        if (LevelManager.Instance.HashSetLevelUnLocked.Contains(levelName))
+        {
+            foreach (var item in this.GetDataLevelSaving().levels)
+                if (item.levelName == levelName)
+                    return item;
+        }
+        return null;
     }
 }

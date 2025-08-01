@@ -2,6 +2,7 @@ using Assets.Scrips.Manager;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -117,11 +118,23 @@ public class GameplayScene : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
-        yield return StartCoroutine(nameof(CoroutineReplay));
+        LevelManager.Instance.CurrentLevel = LevelManager.Instance.GetListDataLevel.IndexOf(LevelManager.Instance.DataLevel) + 1;
+
+        DataLevel nextLevel = LevelManager.Instance.DicDataLevel.Values.ElementAt(LevelManager.Instance.CurrentLevel);
+
+        if (nextLevel != null)
+        {
+            LevelManager.Instance.DataLevel = nextLevel;
+            yield return StartCoroutine(nameof(CoroutineReplay));
+        }
+        else
+        {
+            Debug.Log("Out of size List DataLevel");
+        }
     }
     public void Exit()
     {
-        SceneManager.LoadScene(SceneName.SCENE_HOME);
+        SceneManager.LoadScene(SceneName.SCENE_LEVEL);
     }
     public void Replay()
     {

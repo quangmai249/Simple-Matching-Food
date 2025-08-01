@@ -43,11 +43,13 @@ public class LevelScene : MonoBehaviour
     }
     private void SetDataLevel(GameObject btn)
     {
-        UIManager.instance.ShowPanel(EnumPanelType.SelectLevel);
-
         LevelManager.Instance.DataLevel = btn.GetComponent<ButtonLevel>().Data;
 
+        UIManager.instance.ShowPanel(EnumPanelType.SelectLevel);
+
+        panelSelectLevel = GameObject.FindGameObjectWithTag(TagName.PANEL_SELECT_LEVEL);
         panelSelectLevel.GetComponent<PanelSelectLevel>().TextLevelName = LevelManager.Instance.DataLevel.levelName;
+        panelSelectLevel.GetComponent<PanelSelectLevel>().SetImageStar(LevelManager.Instance.DataLevel.levelName);
     }
     private bool IsUnlocked(string levelName)
     {

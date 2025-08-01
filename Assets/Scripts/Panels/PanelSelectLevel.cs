@@ -10,6 +10,9 @@ using UnityEngine.UI;
 public class PanelSelectLevel : MonoBehaviour
 {
     [SerializeField] Button btnPlay;
+    [SerializeField] Sprite spriteStar;
+    [SerializeField] Sprite spriteStarDefault;
+
     [SerializeField] GameObject panelStar;
     [SerializeField] TextMeshProUGUI txtLevelName;
     private void Awake()
@@ -22,13 +25,24 @@ public class PanelSelectLevel : MonoBehaviour
     }
     private void StartPlay()
     {
+        foreach (var item in LevelManager.Instance.DicDataLevel)
+            LevelManager.Instance.Pool.ReturnToPool(item.Key, LevelManager.Instance.gameObject);
+
         btnPlay.GetComponent<Image>().DOFade(0f, .15f).OnComplete(() =>
         {
-            foreach (var item in LevelManager.Instance.DicDataLevel)
-                LevelManager.Instance.Pool.ReturnToPool(item.Key, LevelManager.Instance.gameObject);
-
+            AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButtonStart);
             SceneManager.LoadScene(SceneName.SCENE_GAMEPLAY);
         });
+    }
+    public void SetImageStar(string levelName)
+    {
+        foreach (Transform item in panelStar.transform)
+            item.GetComponent<Image>().sprite = spriteStarDefault;
+
+        int countStar = SaveManager.Instance.GetLevelFromDataLevelSaving(levelName).starCount;
+
+        for (int i = 0; i < countStar; i++)
+            panelStar.transform.GetChild(i).GetComponent<Image>().sprite = spriteStar;
     }
     public string TextLevelName
     {

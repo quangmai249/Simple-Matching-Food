@@ -13,6 +13,7 @@ public class PanelWinGame : MonoBehaviour
     [SerializeField] Button btnExit;
 
     [Header("Stars")]
+    [SerializeField] int countStar;
     [SerializeField] GameObject panelStar;
     [SerializeField] Sprite spriteStar;
     [SerializeField] Sprite spriteNoneStar;
@@ -54,27 +55,19 @@ public class PanelWinGame : MonoBehaviour
         float maxTime = timeManager.MaxTimeLimit;
         float timeRemaning = timeManager.TimeLimit;
 
-        if (timeRemaning >= maxTime * (2 / 3))
-        {
-            yield return new WaitForSeconds(0.15f);
-            panelStar.transform.GetChild(0).GetComponent<Image>().sprite = spriteStar;
-            yield return new WaitForSeconds(0.25f);
-            panelStar.transform.GetChild(1).GetComponent<Image>().sprite = spriteStar;
-            yield return new WaitForSeconds(0.35f);
-            panelStar.transform.GetChild(2).GetComponent<Image>().sprite = spriteStar;
-        }
-        else if (timeRemaning >= maxTime * (1 / 3))
-        {
-            yield return new WaitForSeconds(0.15f);
-            panelStar.transform.GetChild(0).GetComponent<Image>().sprite = spriteStar;
-            yield return new WaitForSeconds(0.25f);
-            panelStar.transform.GetChild(1).GetComponent<Image>().sprite = spriteStar;
-        }
+        if (timeRemaning / maxTime > 0.75f)
+            countStar = 3;
+        else if (timeRemaning / maxTime > 0.25f)
+            countStar = 2;
         else
+            countStar = 1;
+
+        for (int i = 0; i < countStar; i++)
         {
-            yield return new WaitForSeconds(0.15f);
-            panelStar.transform.GetChild(0).GetComponent<Image>().sprite = spriteStar;
+            yield return new WaitForSeconds(0.1f);
+            panelStar.transform.GetChild(i).GetComponent<Image>().sprite = spriteStar;
         }
         panelButtons.SetActive(true);
     }
+    public int CountStar { get => countStar; }
 }

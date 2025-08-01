@@ -18,6 +18,8 @@ TagManager:
   - GameplayScene
   - FxTemporaire
   - LevelScene
+  - PanelSelectLevel
+  - PanelWinGame
   layers:
   - Default
   - TransparentFX

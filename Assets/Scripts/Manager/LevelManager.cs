@@ -13,6 +13,8 @@ namespace Assets.Scrips.Manager
         [SerializeField] GameObject buttonLevel;
         [SerializeField] List<DataLevel> lsDataLevel = new List<DataLevel>();
 
+        private int _currentLevel;
+
         private ObjectPool _pool;
         private DataLevel _dataLevel;
 
@@ -31,8 +33,6 @@ namespace Assets.Scrips.Manager
         }
         private void Start()
         {
-            SaveManager.Instance.DeleteAllKeyData();
-
             _hashSetLevelUnlocked = new HashSet<string>(GetListLevel.Select(n => n.levelName));
 
             this.SetButtonDefault();
@@ -59,7 +59,6 @@ namespace Assets.Scrips.Manager
         public HashSet<string> HashSetLevelUnLocked
         {
             get => _hashSetLevelUnlocked;
-            set => _hashSetLevelUnlocked = value;
         }
         public List<Level> GetListLevel
         {
@@ -77,6 +76,10 @@ namespace Assets.Scrips.Manager
         public ObjectPool Pool
         {
             get => _pool;
+        }
+        public int CurrentLevel
+        {
+            get; set;
         }
     }
 }

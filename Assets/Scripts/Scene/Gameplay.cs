@@ -2,6 +2,7 @@ using Assets.Scrips.Manager;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -107,6 +108,33 @@ public class Gameplay : MonoBehaviour
     private IEnumerator UnlockNextLevel()
     {
         yield return StartCoroutine(gameplayScene.DisplayPanelWin());
+
+        int index = LevelManager.Instance.GetListDataLevel.IndexOf(LevelManager.Instance.DataLevel);
+        int starCount = GameObject.FindGameObjectWithTag(TagName.PANEL_WIN_GAME).GetComponent<PanelWinGame>().CountStar;
+
+        string currentLevelName = LevelManager.Instance.GetListDataLevel[index].levelName;
+        string nextLevelName = LevelManager.Instance.GetListDataLevel[index + 1].levelName;
+
+        if (LevelManager.Instance.HashSetLevelUnLocked.Contains(currentLevelName))
+        {
+            if (SaveManager.Instance.GetLevelFromDataLevelSaving(currentLevelName).starCount < starCount)
+                SaveManager.Instance.SaveDataLevel(new Level(starCount, currentLevelName));
+        }
+
+        if (nextLevelName != "")
+        {
+            if (!LevelManager.Instance.HashSetLevelUnLocked.Contains(nextLevelName))
+            {
+                SaveManager.Instance.SaveDataLevel(new Level(0, nextLevelName));
+
+                LevelManager.Instance.HashSetLevelUnLocked.Add(nextLevelName);
+                LevelManager.Instance.DicDataLevel.ElementAt(index + 1).Value.isUnlocked = true;
+            }
+        }
+        else
+        {
+            Debug.LogWarning(nextLevelName + " is null!");
+        }
     }
     private IEnumerator CoroutineNotMatched()
     {
