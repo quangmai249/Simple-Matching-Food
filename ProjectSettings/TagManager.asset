@@ -20,6 +20,7 @@ TagManager:
   - LevelScene
   - PanelSelectLevel
   - PanelWinGame
+  - ButtonNextStage
   layers:
   - Default
   - TransparentFX

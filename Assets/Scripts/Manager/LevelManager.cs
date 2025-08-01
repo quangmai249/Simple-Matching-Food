@@ -34,7 +34,6 @@ namespace Assets.Scrips.Manager
         private void Start()
         {
             _hashSetLevelUnlocked = new HashSet<string>(GetListLevel.Select(n => n.levelName));
-
             this.SetButtonDefault();
         }
         private void SetButtonDefault()
