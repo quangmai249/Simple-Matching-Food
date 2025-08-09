@@ -13,6 +13,7 @@ public class PanelMainMenu : MonoBehaviour
     [SerializeField] Button _btnInformation;
     [SerializeField] Button _btnExit;
     [SerializeField] Button _btnSettings;
+    [SerializeField] Button _btnCollections;
 
     [SerializeField] GameObject _panelMainMenu;
 
@@ -42,12 +43,14 @@ public class PanelMainMenu : MonoBehaviour
         _btnList.onClick.AddListener(ListMainMenu);
         _btnSettings.onClick.AddListener(Settings);
         _btnInformation.onClick.AddListener(Information);
+        _btnCollections.onClick.AddListener(Collections);
 
         _btnExit.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
         _btnList.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
         _btnSettings.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
         _btnStart.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButtonStart));
         _btnInformation.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+        _btnCollections.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
     }
     private void Information()
     {
@@ -70,5 +73,12 @@ public class PanelMainMenu : MonoBehaviour
         UIManager.instance.ShowPanel(EnumPanelType.MainMenu);
 
         homeScene.StartGame();
+    }
+    private void Collections()
+    {
+        if (_panelMainMenu.activeSelf)
+            this.ListMainMenu();
+
+        UIManager.instance.ShowPanel(EnumPanelType.Collections);
     }
 }

@@ -14,6 +14,7 @@ public class SaveManager : Singleton<SaveManager>
     private List<DataLevel> lsDatalevel;
 
     private DataSetting dataSetting;
+    private DataCollection dataCollection;
     private DataLevelSaving dataLevelSaving;
     protected override void Awake()
     {
@@ -110,6 +111,26 @@ public class SaveManager : Singleton<SaveManager>
     {
         PlayerPrefs.SetString(KeyData.DATA_LEVEL, JsonUtility.ToJson(dataLevelSaving, true));
         PlayerPrefs.Save();
+    }
+    public void SaveDataCollection(string name)
+    {
+        if (this.GetDataCollection().name.Contains(name))
+            return;
+
+        this.GetDataCollection().name.Add(name);
+
+        PlayerPrefs.SetString(KeyData.DATA_COLLECTION, JsonUtility.ToJson(dataCollection, true));
+        PlayerPrefs.Save();
+    }
+    public DataCollection GetDataCollection()
+    {
+        dataCollection = JsonUtility.FromJson<DataCollection>(PlayerPrefs.GetString(KeyData.DATA_COLLECTION));
+        if (dataCollection == null)
+        {
+            dataCollection = new DataCollection();
+            dataCollection.name = new List<string>();
+        }
+        return dataCollection;
     }
     public DataSetting GetDataSetting()
     {

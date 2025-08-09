@@ -10,5 +10,6 @@ public enum EnumPanelType
     LevelWin,
     LevelLose,
     Information,
+    Collections,
     Exit
 }

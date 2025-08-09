@@ -20,6 +20,11 @@ public class TileSpawner : MonoBehaviour
 
     private Vector2 gridCellSizeDF, gridSpacingDF;
     private RectOffset gridPaddingDF;
+    private void Awake()
+    {
+        lsBackImg = ImageManager.Instance.LsBackImg;
+        lsFrontImg = ImageManager.Instance.LsFrontImg;
+    }
     private void SetTileLevel()
     {
         _col = (int)LevelManager.Instance.DataLevel.levelSize.x;

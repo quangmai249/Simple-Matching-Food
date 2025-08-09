@@ -58,6 +58,10 @@ MonoBehaviour:
     m_Localized: Matching Food
     m_Metadata:
       m_Items: []
+  - m_Id: 14964954586304512
+    m_Localized: COLLECTION
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

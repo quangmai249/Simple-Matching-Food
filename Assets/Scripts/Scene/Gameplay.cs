@@ -101,6 +101,9 @@ public class Gameplay : MonoBehaviour
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(() =>
                 {
+                    foreach (GameObject item in GameObject.FindGameObjectsWithTag(TagName.TAG_TILE))
+                        SaveManager.Instance.SaveDataCollection(item.GetComponent<Image>().sprite.name);
+
                     StartCoroutine(nameof(UnlockNextLevel));
                 });
         }

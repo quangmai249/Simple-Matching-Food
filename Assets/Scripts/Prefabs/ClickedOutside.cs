@@ -13,5 +13,8 @@ public class ClickedOutside : MonoBehaviour, IPointerClickHandler
 
         GameObject.FindGameObjectWithTag(TagName.BUTTON_NEXT_STAGE).GetComponent<Button>().GetComponent<Image>().color = new Color(1, 1, 1, 1);
         GameObject.FindGameObjectWithTag(TagName.BUTTON_NEXT_STAGE).GetComponent<Button>().interactable = true;
+
+        GameObject.FindGameObjectWithTag(TagName.BUTTON_CANCEL_TO_HOME).GetComponent<Button>().GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        GameObject.FindGameObjectWithTag(TagName.BUTTON_CANCEL_TO_HOME).GetComponent<Button>().interactable = true;
     }
 }

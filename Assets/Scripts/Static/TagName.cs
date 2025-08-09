@@ -17,4 +17,5 @@ public static class TagName
     public static string PANEL_WIN_GAME = "PanelWinGame";
 
     public static string BUTTON_NEXT_STAGE = "ButtonNextStage";
+    public static string BUTTON_CANCEL_TO_HOME = "ButtonCancelToHome";
 }

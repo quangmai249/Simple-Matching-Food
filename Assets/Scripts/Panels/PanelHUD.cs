@@ -8,6 +8,9 @@ public class PanelHUD : MonoBehaviour
 {
     [SerializeField] Button _btnPause;
     [SerializeField] Button _btnResume;
+
+    [SerializeField] GameObject _panelPause;
+
     private void Awake()
     {
         this.SetButtons();
@@ -26,12 +29,16 @@ public class PanelHUD : MonoBehaviour
         GameManager.Instance.IsPaused = true;
         GameManager.Instance.PauseGame();
         this.SetActiveButtons(true);
+
+        _panelPause.gameObject.SetActive(true);
     }
     private void Resume()
     {
         GameManager.Instance.IsPaused = false;
         GameManager.Instance.ResumeGame();
         this.SetActiveButtons(false);
+
+        _panelPause.gameObject.SetActive(false);
     }
     private void SetActiveButtons(bool isPause)
     {

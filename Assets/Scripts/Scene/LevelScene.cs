@@ -10,9 +10,11 @@ using UnityEngine.UI;
 
 public class LevelScene : MonoBehaviour
 {
-    [SerializeField] Button btn;
     [SerializeField] GameObject panelLevel;
     [SerializeField] GameObject panelSelectLevel;
+
+    private Button btnCancelToHome;
+    private Button btnNextLevelStage;
 
     private bool firstStage;
     private Dictionary<GameObject, DataLevel> dic = new Dictionary<GameObject, DataLevel>();
@@ -25,13 +27,24 @@ public class LevelScene : MonoBehaviour
         firstStage = true;
         this.SetActiveButtonLevel();
 
-        btn = GameObject.FindGameObjectWithTag(TagName.BUTTON_NEXT_STAGE).GetComponent<Button>();
-        btn.onClick.AddListener(() =>
+        btnNextLevelStage = GameObject.FindGameObjectWithTag(TagName.BUTTON_NEXT_STAGE).GetComponent<Button>();
+        btnCancelToHome = GameObject.FindGameObjectWithTag(TagName.BUTTON_CANCEL_TO_HOME).GetComponent<Button>();
+
+        btnNextLevelStage.onClick.AddListener(() =>
         {
             AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton);
 
             firstStage = !firstStage;
             this.SetActiveButtonLevel();
+        });
+
+        btnCancelToHome.onClick.AddListener(() =>
+        {
+            foreach (var item in LevelManager.Instance.DicDataLevel)
+                LevelManager.Instance.Pool.ReturnToPool(item.Key, LevelManager.Instance.gameObject);
+
+            SceneManager.LoadScene(SceneName.SCENE_HOME);
+            AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton);
         });
     }
     private void SetButtonLevel()
@@ -86,6 +99,9 @@ public class LevelScene : MonoBehaviour
     {
         GameObject.FindGameObjectWithTag(TagName.BUTTON_NEXT_STAGE).GetComponent<Image>().color = new Color(1, 1, 1, 0);
         GameObject.FindGameObjectWithTag(TagName.BUTTON_NEXT_STAGE).GetComponent<Button>().interactable = false;
+
+        GameObject.FindGameObjectWithTag(TagName.BUTTON_CANCEL_TO_HOME).GetComponent<Image>().color = new Color(1, 1, 1, 0);
+        GameObject.FindGameObjectWithTag(TagName.BUTTON_CANCEL_TO_HOME).GetComponent<Button>().interactable = false;
 
         LevelManager.Instance.DataLevel = btn.GetComponent<ButtonLevel>().Data;
 
