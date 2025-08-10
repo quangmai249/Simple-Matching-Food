@@ -121,6 +121,8 @@ public class SaveManager : Singleton<SaveManager>
 
         PlayerPrefs.SetString(KeyData.DATA_COLLECTION, JsonUtility.ToJson(dataCollection, true));
         PlayerPrefs.Save();
+
+        GameManager.Instance.IsCollectNewTile = true;
     }
     public DataCollection GetDataCollection()
     {

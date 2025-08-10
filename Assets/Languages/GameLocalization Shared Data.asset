@@ -59,6 +59,14 @@ MonoBehaviour:
     m_Key: txt_title_collection
     m_Metadata:
       m_Items: []
+  - m_Id: 15461633261457408
+    m_Key: txt_pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15462023084265472
+    m_Key: txt_give_up
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

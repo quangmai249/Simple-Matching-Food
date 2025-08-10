@@ -62,6 +62,16 @@ MonoBehaviour:
     m_Localized: COLLECTION
     m_Metadata:
       m_Items: []
+  - m_Id: 15461633261457408
+    m_Localized: PAUSED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15462023084265472
+    m_Localized: 'GIVE UP
+
+      ARE YOU SURE?'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

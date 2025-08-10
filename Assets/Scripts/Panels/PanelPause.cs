@@ -5,17 +5,24 @@ using UnityEngine.UI;
 
 public class PanelPause : MonoBehaviour
 {
-    [SerializeField] Button btnResume;
-    [SerializeField] Button btnSetting;
-    [SerializeField] Button btnGiveUp;
+    [SerializeField] Button _btnGiveUp;
+    [SerializeField] GameObject panelGiveUp;
 
-    void Start()
+    private void Awake()
     {
-
+        this.SetButtons();
     }
-
-    void Update()
+    private void Start()
     {
-
+        panelGiveUp.SetActive(false);
+    }
+    private void SetButtons()
+    {
+        _btnGiveUp.onClick.AddListener(GiveUp);
+        _btnGiveUp.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
+    }
+    private void GiveUp()
+    {
+        panelGiveUp.SetActive(true);
     }
 }

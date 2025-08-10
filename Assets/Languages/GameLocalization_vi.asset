@@ -62,6 +62,14 @@ MonoBehaviour:
     m_Localized: "B\u1ED8 S\u01AFU T\u1EACP"
     m_Metadata:
       m_Items: []
+  - m_Id: 15461633261457408
+    m_Localized: "T\u1EA0M D\u1EEANG"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15462023084265472
+    m_Localized: "B\u1ECE CU\u1ED8C\nB\u1EA0N C\xD3 CH\u1EAEC CH\u1EAEN KH\xD4NG?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

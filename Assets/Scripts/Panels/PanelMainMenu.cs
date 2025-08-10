@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class PanelMainMenu : MonoBehaviour
 {
+    [Header("Buttons")]
     [SerializeField] Button _btnList;
     [SerializeField] Button _btnStart;
     [SerializeField] Button _btnInformation;
@@ -15,27 +16,36 @@ public class PanelMainMenu : MonoBehaviour
     [SerializeField] Button _btnSettings;
     [SerializeField] Button _btnCollections;
 
+    [Header("GameObjects")]
+    [SerializeField] GameObject _imageNotify;
     [SerializeField] GameObject _panelMainMenu;
 
     private HomeScene homeScene;
+
     private void Awake()
     {
         this.SetButtons();
     }
+
     private void Start()
     {
         homeScene = GameObject.FindGameObjectWithTag(TagName.TAG_HOME_SCENE).GetComponent<HomeScene>();
 
         _panelMainMenu.SetActive(false);
+
+        _imageNotify.SetActive(GameManager.Instance.IsCollectNewTile);
     }
+
     private void Settings()
     {
         UIManager.instance.ShowPanel(EnumPanelType.Settings);
     }
+
     private void Exit()
     {
         UIManager.instance.ShowPanel(EnumPanelType.Exit);
     }
+
     private void SetButtons()
     {
         _btnExit.onClick.AddListener(Exit);
@@ -52,10 +62,12 @@ public class PanelMainMenu : MonoBehaviour
         _btnInformation.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
         _btnCollections.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
     }
+
     private void Information()
     {
         UIManager.instance.ShowPanel(EnumPanelType.Information);
     }
+
     private void ListMainMenu()
     {
         _panelMainMenu.SetActive(!_panelMainMenu.activeSelf);
@@ -68,16 +80,24 @@ public class PanelMainMenu : MonoBehaviour
         else
             _btnList.image.color = new Color(1, 1, 1, 1);
     }
+
     private void StartGame()
     {
         UIManager.instance.ShowPanel(EnumPanelType.MainMenu);
 
         homeScene.StartGame();
     }
+
     private void Collections()
     {
         if (_panelMainMenu.activeSelf)
             this.ListMainMenu();
+
+        if (GameManager.Instance.IsCollectNewTile)
+        {
+            GameManager.Instance.IsCollectNewTile = false;
+            _imageNotify.SetActive(GameManager.Instance.IsCollectNewTile);
+        }
 
         UIManager.instance.ShowPanel(EnumPanelType.Collections);
     }
