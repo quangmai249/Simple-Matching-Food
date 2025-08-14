@@ -11,6 +11,7 @@ public enum EnumPanelType
     LevelLose,
     Information,
     Collections,
+    DetailCollection,
     GiveUp,
     Exit
 }

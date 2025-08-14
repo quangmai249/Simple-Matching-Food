@@ -18,18 +18,25 @@ public class PanelSettings : MonoBehaviour
 
     private Dictionary<EnumLanguages, Button> languages = new Dictionary<EnumLanguages, Button>();
     private Button _languageClicked;
+
     private void Awake()
     {
         this.Register();
         this.SetButtons();
     }
+
+    private void Start()
+    {
+        SaveManager.Instance.ChangeLanguage();
+    }
+
     private void Update()
     {
         AudioManager.Instance.SetVolume(SFXSlider.value, MusicSlider.value);
     }
+
     private void OnEnable()
     {
-        SaveManager.Instance.ChangeLanguage();
         DataSetting dataSetting = SaveManager.Instance.GetDataSetting();
 
         SFXSlider.value = dataSetting.sfx;
@@ -46,11 +53,13 @@ public class PanelSettings : MonoBehaviour
 
         this.ChangeLanguage(languages.FirstOrDefault().Value);
     }
+
     private void OnDisable()
     {
         DataSetting dataSetting = SaveManager.Instance.GetDataSetting();
         AudioManager.Instance.SetVolume(dataSetting.Sfx, dataSetting.Music);
     }
+
     private void Register()
     {
         foreach (Transform item in _panelLanguages)
@@ -65,6 +74,7 @@ public class PanelSettings : MonoBehaviour
                 ChangeLanguage(item.Value);
             });
     }
+
     private void SetButtons()
     {
         _btnCancel.onClick.AddListener(Cancel);
@@ -73,15 +83,19 @@ public class PanelSettings : MonoBehaviour
         _btnCancel.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
         _btnConfirm.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
     }
+
     private void Confirm()
     {
         SaveManager.Instance.SaveDataSetting(SFXSlider.value, MusicSlider.value, _languageClicked.name);
         UIManager.instance.ShowPanel(EnumPanelType.MainMenu);
+        SaveManager.Instance.ChangeLanguage();
     }
+
     private void Cancel()
     {
         UIManager.instance.ShowPanel(EnumPanelType.MainMenu);
     }
+
     private void ChangeLanguage(Button btn)
     {
         foreach (var item in languages)

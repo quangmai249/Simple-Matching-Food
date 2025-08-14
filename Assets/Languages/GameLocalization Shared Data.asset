@@ -67,6 +67,10 @@ MonoBehaviour:
     m_Key: txt_give_up
     m_Metadata:
       m_Items: []
+  - m_Id: 17161492058230784
+    m_Key: txt_detail_collection
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

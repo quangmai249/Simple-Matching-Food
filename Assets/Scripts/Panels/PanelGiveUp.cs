@@ -26,6 +26,8 @@ public class PanelGiveUp : MonoBehaviour
 
     private void Confirm()
     {
+        DOTween.Clear();
+
         GameManager.Instance.GiveUp();
     }
 }

@@ -70,6 +70,10 @@ MonoBehaviour:
     m_Localized: "B\u1ECE CU\u1ED8C\nB\u1EA0N C\xD3 CH\u1EAEC CH\u1EAEN KH\xD4NG?"
     m_Metadata:
       m_Items: []
+  - m_Id: 17161492058230784
+    m_Localized: "CHI TI\u1EBET"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -16,26 +16,32 @@ public class SaveManager : Singleton<SaveManager>
     private DataSetting dataSetting;
     private DataCollection dataCollection;
     private DataLevelSaving dataLevelSaving;
+
     protected override void Awake()
     {
         base.Awake();
     }
+
     private void Start()
     {
         StartCoroutine(nameof(SetLocalizationSettings));
     }
+
     protected override void OnDestroy()
     {
         base.OnDestroy();
     }
+
     private IEnumerator SetLocalizationSettings()
     {
         yield return LocalizationSettings.InitializationOperation;
     }
+
     private DataSetting DataSettingDefault()
     {
         return new DataSetting(.5f, .5f, EnumLanguages.English);
     }
+
     private DataLevelSaving DataLevelSavingDefault()
     {
         lsDatalevel = LevelManager.Instance.GetListDataLevel;
@@ -62,16 +68,19 @@ public class SaveManager : Singleton<SaveManager>
 
         return dataLevelSaving;
     }
+
     public void DeleteKeyData(string key)
     {
         PlayerPrefs.DeleteKey(key);
         PlayerPrefs.Save();
     }
+
     public void DeleteAllKeyData()
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
     }
+
     public void ChangeLanguage()
     {
         if (this.GetDataSetting() != null)
@@ -82,6 +91,7 @@ public class SaveManager : Singleton<SaveManager>
 
         LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[0];
     }
+
     public void SaveDataSetting(float sfx, float music, string language)
     {
         if (Enum.TryParse(language, out EnumLanguages enumLanguages))
@@ -93,6 +103,7 @@ public class SaveManager : Singleton<SaveManager>
             PlayerPrefs.Save();
         }
     }
+
     public void SaveDataLevel(Level level)
     {
         foreach (var item in dataLevelSaving.levels)
@@ -107,11 +118,13 @@ public class SaveManager : Singleton<SaveManager>
         dataLevelSaving.levels.Add(level);
         this.SaveAllDataLevel(dataLevelSaving);
     }
+
     public void SaveAllDataLevel(DataLevelSaving dataLevelSaving)
     {
         PlayerPrefs.SetString(KeyData.DATA_LEVEL, JsonUtility.ToJson(dataLevelSaving, true));
         PlayerPrefs.Save();
     }
+
     public void SaveDataCollection(string name)
     {
         if (this.GetDataCollection().name.Contains(name))
@@ -124,6 +137,7 @@ public class SaveManager : Singleton<SaveManager>
 
         GameManager.Instance.IsCollectNewTile = true;
     }
+
     public DataCollection GetDataCollection()
     {
         dataCollection = JsonUtility.FromJson<DataCollection>(PlayerPrefs.GetString(KeyData.DATA_COLLECTION));
@@ -134,6 +148,7 @@ public class SaveManager : Singleton<SaveManager>
         }
         return dataCollection;
     }
+
     public DataSetting GetDataSetting()
     {
         dataSetting = JsonUtility.FromJson<DataSetting>(PlayerPrefs.GetString(KeyData.DATA_SETTING));
@@ -142,6 +157,7 @@ public class SaveManager : Singleton<SaveManager>
 
         return dataSetting;
     }
+
     public DataLevelSaving GetDataLevelSaving()
     {
         _jsonDataLevel = PlayerPrefs.GetString(KeyData.DATA_LEVEL);
@@ -160,6 +176,7 @@ public class SaveManager : Singleton<SaveManager>
 
         return dataLevelSaving;
     }
+
     public Level GetLevelFromDataLevelSaving(string levelName)
     {
         if (LevelManager.Instance.HashSetLevelUnLocked.Contains(levelName))

@@ -15,14 +15,12 @@ public class PanelCollections : MonoBehaviour
     private int _sumCollection, _countUnlocked;
     private GameObject _go;
     private GameObject[] _arr;
+
     private void Awake()
     {
-        btnConfirm.onClick.AddListener(() =>
-        {
-            AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton);
-            UIManager.instance.ShowPanel(EnumPanelType.MainMenu);
-        });
+        this.SetButtons();
     }
+
     private void Start()
     {
         _sumCollection = ImageManager.Instance.PoolImage.Pool.Count;
@@ -43,6 +41,7 @@ public class PanelCollections : MonoBehaviour
 
         txtCount.text = $"{_countUnlocked}/{_sumCollection}";
     }
+
     private void OnDestroy()
     {
         foreach (GameObject item in _arr)
@@ -51,6 +50,16 @@ public class PanelCollections : MonoBehaviour
                 ImageManager.Instance.PoolImage.ReturnToPool(item, ImageManager.Instance.gameObject);
         }
     }
+
+    private void SetButtons()
+    {
+        btnConfirm.onClick.AddListener(() =>
+        {
+            AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton);
+            UIManager.instance.ShowPanel(EnumPanelType.MainMenu);
+        });
+    }
+
     private void SetImageCollection(GameObject go)
     {
         if (SaveManager.Instance.GetDataCollection().name.Contains(go.GetComponent<Image>().sprite.name))
