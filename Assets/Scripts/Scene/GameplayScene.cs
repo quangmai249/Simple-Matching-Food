@@ -31,6 +31,7 @@ public class GameplayScene : MonoBehaviour
         this.SetButtons();
         datalevel = LevelManager.Instance.DataLevel;
     }
+
     private void Start()
     {
         SaveManager.Instance.ChangeLanguage();
@@ -42,15 +43,18 @@ public class GameplayScene : MonoBehaviour
 
         StartCoroutine(nameof(CoroutineStartGame));
     }
+
     private void OnEnable()
     {
         GameEvents.OnLevelChange.Register(OnLevelChanged);
         GameEvents.OnLevelChange.Register(OnLeveCompleted);
     }
+
     private void OnDestroy()
     {
         GameEvents.OnLevelChange.Clear();
     }
+
     private void SetButtons()
     {
         btnReplay.onClick.AddListener(Replay);
@@ -59,6 +63,7 @@ public class GameplayScene : MonoBehaviour
         btnReplay.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
         btnExitLose.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
     }
+
     private void AnimBegin()
     {
         imgBG.DOFade(1f, 1f)
@@ -72,15 +77,18 @@ public class GameplayScene : MonoBehaviour
                 .SetEase(Ease.InSine);
             });
     }
+
     private void OnLevelChanged(string name)
     {
         txtLevel.text = name;
     }
+
     private void OnLeveCompleted(string name)
     {
         txtLevelCompleted.text = name;
         txtLevelUncompleted.text = name;
     }
+
     private IEnumerator CoroutineReplay()
     {
         GameObject.FindGameObjectWithTag(TagName.TAG_GAMEPLAY).GetComponent<Gameplay>()?.SetDefault();
@@ -93,6 +101,7 @@ public class GameplayScene : MonoBehaviour
 
         yield return StartCoroutine(timeManager.CoroutineRunTime(1f));
     }
+
     private IEnumerator CoroutineStartGame()
     {
         UIManager.instance.ShowPanel(EnumPanelType.Loading);
@@ -112,6 +121,7 @@ public class GameplayScene : MonoBehaviour
 
         yield return StartCoroutine(timeManager.CoroutineRunTime(2.5f));
     }
+
     private IEnumerator CoroutineNextLevel()
     {
         UIManager.instance.ShowPanel(EnumPanelType.Loading);
@@ -132,18 +142,22 @@ public class GameplayScene : MonoBehaviour
             Debug.Log("Out of size List DataLevel");
         }
     }
+
     public void Exit()
     {
         SceneManager.LoadScene(SceneName.SCENE_LEVEL);
     }
+
     public void Replay()
     {
         StartCoroutine(nameof(CoroutineReplay));
     }
+
     public void NextLevel()
     {
         StartCoroutine(nameof(CoroutineNextLevel));
     }
+
     public IEnumerator DisplayPanelWin()
     {
         PanelWinGame panelWinGame = UIManager.instance.GetPanel(EnumPanelType.LevelWin).GetComponent<PanelWinGame>();

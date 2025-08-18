@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPaused: 0
+  isCollectNewTile: 0
 --- !u!4 &265321104
 Transform:
   m_ObjectHideFlags: 0

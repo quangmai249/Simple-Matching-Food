@@ -20,23 +20,28 @@ public class PanelWinGame : MonoBehaviour
 
     private TimeManager timeManager;
     private GameplayScene gameplayScene;
+
     private void Awake()
     {
         this.SetButtons();
     }
+
     private void Start()
     {
         timeManager = GameObject.FindGameObjectWithTag(TagName.TAG_TIME_MANAGER).GetComponent<TimeManager>();
         gameplayScene = GameObject.FindGameObjectWithTag(SceneName.SCENE_GAMEPLAY).GetComponent<GameplayScene>();
     }
+
     private void NextLevel()
     {
         gameplayScene.NextLevel();
     }
+
     private void Exit()
     {
         gameplayScene.Exit();
     }
+
     private void SetButtons()
     {
         btnExit.onClick.AddListener(Exit);
@@ -45,11 +50,15 @@ public class PanelWinGame : MonoBehaviour
         btnExit.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
         btnNextLevel.onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
     }
+
     public void ResetImageStar()
     {
+        panelButtons.SetActive(false);
+
         foreach (Transform item in panelStar.transform)
             item.GetComponent<Image>().sprite = spriteNoneStar;
     }
+
     public IEnumerator SetImageStar()
     {
         float maxTime = timeManager.MaxTimeLimit;
@@ -64,10 +73,13 @@ public class PanelWinGame : MonoBehaviour
 
         for (int i = 0; i < countStar; i++)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.15f);
             panelStar.transform.GetChild(i).GetComponent<Image>().sprite = spriteStar;
         }
+
+        yield return new WaitForSeconds(1f);
         panelButtons.SetActive(true);
     }
+
     public int CountStar { get => countStar; }
 }
