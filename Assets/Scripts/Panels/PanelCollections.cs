@@ -67,11 +67,15 @@ public class PanelCollections : MonoBehaviour
             _countUnlocked++;
             go.GetComponent<Collection>().enabled = true;
             go.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+
+            go.transform.GetChild(0).gameObject.SetActive(true);
         }
         else
         {
             go.GetComponent<Collection>().enabled = false;
             go.GetComponent<Image>().color = new Color(0, 0, 0, 0.1f);
+
+            go.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }

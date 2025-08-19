@@ -4,7 +4,7 @@ yellow pepper ,黄辣椒,黄ピーマン,Ớt vàng
 lemon,柠檬,レモン,Quả chanh
 wheat,小麦,小麦（こむぎ）,Lúa mì
 watermelon ,西瓜,スイカ,Dưa hấu
-drinking water,白开水,水,Nước lọc
+drinking water,饮用水,飲料水（いんりょうすい）,Nước uống
 grape wine,葡萄酒,ワイン,Rượu nho
 tomato,西红柿,トマト,Cà chua
 green tea,绿茶,緑茶（りょくちゃ）,Trà xanh
@@ -23,9 +23,9 @@ red grapes,红葡萄,赤ぶどう,Chùm nho đỏ
 red radish,红萝卜,赤カブ,Củ cải đỏ
 pumpkin,南瓜,かぼちゃ,Quả bí ngô
 potato,土豆,じゃがいも,Củ khoai tây
-nutritious porridge,营养粥,栄養粥（えいようがゆ）,Cháo dinh dưỡng
+porridge,粥,おかゆ,Cháo
 pineapple,菠萝,パイナップル,Quả dứa
-pastry,烤饼,パンケーキ／焼き菓子,Bánh nướng
+pastry,糕点,ペイストリー,Bánh nướng
 peas,豌豆,グリーンピース,Đậu Hà Lan
 pear,梨,梨（なし）,Quả Lê
 peach,桃子,桃（もも）,Quả Đào
@@ -39,7 +39,7 @@ mushroom,蘑菇,きのこ,Cây nấm
 mint,薄荷,ミント,Rau bạc hà
 fresh milk,鲜牛奶,牛乳（ぎゅうにゅう）,Sữa tươi
 melon,哈密瓜,メロン（哈密瓜）,Dưa lưới
-fresh meat,鲜肉,生肉（なまにく）,Thịt tươi
+raw meat,生肉,生肉（なまにく）,Thịt sống
 mandrake root,曼德拉草,マンドレイク,Cây Mandrake
 fresh chicken drumstick,新鲜鸡腿,新鮮な鶏もも肉 (しんせんな とりももにく),Đùi gà tươi
 kiwi,猕猴桃,キウイ,Quả Kiwi
@@ -68,9 +68,9 @@ cookies,曲奇,クッキー,Bánh cookies
 coffee,咖啡,コーヒー,Cà phê
 coconut,椰子,ココナッツ,Quả dừa
 chocolate,巧克力,チョコレート,Sô-cô-la
-chicken meat,鲜鸡肉,鶏肉（とりにく）,Thịt gà tươi
+chicken,鲜鸡肉,鶏肉（とりにく）,Thịt gà tươi
 cherry,樱桃,さくらんぼ,Quả anh đào
-cheesecake,芝士蛋糕,チーズケーキ,Bánh ngọt phô mai
+cheesecake,芝士蛋糕,チーズケーキ,Bánh phô mai
 cheddar cheese,切达奶酪,チェダーチーズ,Phô mai Cheddar
 champignon,白蘑菇,マッシュルーム,Nấm mỡ
 emmental cheese,埃门塔奶酪,エメンタールチーズ,Phô mai Emmental
@@ -79,12 +79,12 @@ carrot,胡萝卜,にんじん,Cà rốt
 lollipop,棒棒糖,ペロペロキャンディー,Kẹo mút
 candy,糖果,キャンディー,Kẹo ngọt
 cake,蛋糕,ケーキ,Bánh ngọt
-cake slice,蛋糕块,ケーキのかけら,Mẩu bánh ngọt
+cake slice,蛋糕片,ケーキの一切れ（ひときれ）,Miếng bánh ngọt
 cabbage,卷心菜,キャベツ,Cải bắp
 butter,黄油,バター,Bơ sữa bò
 broccoli,西兰花,ブロッコリー,Bông cải xanh
 bread,面包,パン,Bánh mì
-whole wheat bread,全麦面包,全粒粉パン,Bánh mì ngũ cốc
+whole wheat bread,全麦面包,全麦パン,Bánh mì ngũ cốc
 baguette,法棍,バゲット,Bánh mì baguette
 tomato soup,番茄汤,トマトスープ,Súp cà chua
 pork bone,猪骨,豚骨（とんこつ）,Xương ống heo
@@ -93,8 +93,9 @@ blueberry,蓝莓,ブルーベリー,Quả việt quất
 beetroot,甜菜,ビート,Củ dền
 beer ,啤酒,ビール,Bia
 bacon,培根,ベーコン,Thịt xông khói
-yellow banana,黄香蕉,黄色いバナナ,Chuối vàng
+banana,香蕉,バナナ,Chuối
 avocado,牛油果,アボカド,Quả bơ
 asparagus,芦笋,アスパラガス,Măng tây
 poisonous mushroom,毒蘑菇,毒きのこ,Nấm độc
 chestnut,栗子,栗（くり）,Hạt dẻ
+amanita,毒蝇伞,ベニテングタケ,Nấm Amanita
