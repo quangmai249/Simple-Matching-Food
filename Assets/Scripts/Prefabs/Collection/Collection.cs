@@ -36,6 +36,8 @@ public class Collection : MonoBehaviour, IPointerClickHandler
 
         ImageManager.Instance.ImgDetailCollection = this.GetComponent<Image>().sprite;
 
+        AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton);
+
         UIManager.instance.ShowPanel(EnumPanelType.DetailCollection);
     }
 }

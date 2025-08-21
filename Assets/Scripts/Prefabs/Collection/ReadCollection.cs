@@ -37,7 +37,7 @@ public class ReadCollection : MonoBehaviour
             {
                 if (item != string.Empty)
                 {
-                    dicContent[keys[count].Trim()].Add(item.Trim().ToLower());
+                    dicContent[keys[count].Trim()].Add(item.Trim());
                     count++;
                 }
             }
@@ -46,10 +46,9 @@ public class ReadCollection : MonoBehaviour
         return dicContent;
     }
 
-    public string GetValue(string name)
+    public int GetIndex(string name)
     {
         int index = -1;
-
         foreach (string item in _arr)
         {
             if (item.Trim().ToLower().Equals(name.Trim().ToLower()))
@@ -59,10 +58,31 @@ public class ReadCollection : MonoBehaviour
             }
         }
 
+        return index;
+    }
+
+    public string GetNameCollection(int index)
+    {
         if (index < 0)
             return string.Empty;
 
         string language = SaveManager.Instance.GetDataSetting().enumLanguages.ToString();
+
+        if (_dic[language].Count < index)
+            return string.Empty;
+
+        if (_dic[language][index] != null)
+            return _dic[language][index];
+
+        return string.Empty;
+    }
+
+    public string GetDescriptionCollection(int index)
+    {
+        if (index < 0)
+            return string.Empty;
+
+        string language = "Detail" + SaveManager.Instance.GetDataSetting().enumLanguages.ToString();
 
         if (_dic[language].Count < index)
             return string.Empty;
