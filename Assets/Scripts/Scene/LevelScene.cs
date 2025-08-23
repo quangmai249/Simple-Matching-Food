@@ -54,6 +54,7 @@ public class LevelScene : MonoBehaviour
 
         foreach (var item in dic.Keys)
             item.gameObject.transform.SetParent(panelLevel.transform);
+        }
 
         foreach (var item in dic)
         {
