@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 200666944767169374}
   m_Layer: 5
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: ImageCollection
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,4 +164,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6b1ebb1a1dcda445b6bf5a45892f7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isClickedFirstTime: 0

@@ -12,16 +12,24 @@ public class LoadingScene : MonoBehaviour
     private bool _isReady = false;
     private bool _isLoadingFailed = false;
     private TilePool tilePool;
+
+    private void Awake()
+    {
+
+    }
+
     private void Start()
     {
         UIManager.instance.ShowPanel(EnumPanelType.Loading);
         SaveManager.Instance.ChangeLanguage();
         this.CheckTilePool();
     }
+
     private void Update()
     {
         this.CheckLoading();
     }
+
     private void CheckLoading()
     {
         timeLoading += Time.deltaTime;
@@ -38,6 +46,7 @@ public class LoadingScene : MonoBehaviour
             return;
         }
     }
+
     private void CheckTilePool()
     {
         tilePool = GameObject.FindGameObjectWithTag(TagName.TAG_TILE_POOL).GetComponent<TilePool>();

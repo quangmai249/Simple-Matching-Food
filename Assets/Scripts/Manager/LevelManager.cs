@@ -27,15 +27,18 @@ namespace Assets.Scrips.Manager
 
             _pool = new ObjectPool(buttonLevel, this.transform, lsDataLevel.Count);
         }
+
         protected override void OnDestroy()
         {
             base.OnDestroy();
         }
+
         private void Start()
         {
             _hashSetLevelUnlocked = new HashSet<string>(GetListLevel.Select(n => n.levelName));
             this.SetButtonDefault();
         }
+
         private void SetButtonDefault()
         {
             int count = 0;
@@ -51,31 +54,38 @@ namespace Assets.Scrips.Manager
                 count++;
             }
         }
+
         public Dictionary<GameObject, DataLevel> DicDataLevel
         {
             get => dic;
         }
+
         public HashSet<string> HashSetLevelUnLocked
         {
             get => _hashSetLevelUnlocked;
         }
+
         public List<Level> GetListLevel
         {
             get => SaveManager.Instance.GetDataLevelSaving().levels;
         }
+
         public List<DataLevel> GetListDataLevel
         {
             get => lsDataLevel;
         }
+
         public DataLevel DataLevel
         {
             get => _dataLevel;
             set => _dataLevel = value;
         }
+
         public ObjectPool Pool
         {
             get => _pool;
         }
+
         public int CurrentLevel
         {
             get; set;

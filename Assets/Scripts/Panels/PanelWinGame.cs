@@ -34,6 +34,12 @@ public class PanelWinGame : MonoBehaviour
 
     private void NextLevel()
     {
+        if ((LevelManager.Instance.CurrentLevel + 1) == LevelManager.Instance.Pool.Pool.Count)
+        {
+            this.Exit();
+            return;
+        }
+
         gameplayScene.NextLevel();
     }
 

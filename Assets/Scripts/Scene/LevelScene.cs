@@ -19,6 +19,7 @@ public class LevelScene : MonoBehaviour
 
     private bool firstStage;
     private Dictionary<GameObject, DataLevel> dic = new Dictionary<GameObject, DataLevel>();
+
     private void Start()
     {
         UIManager.instance.ShowPanel(EnumPanelType.Stage);
@@ -41,6 +42,8 @@ public class LevelScene : MonoBehaviour
 
         btnCancelToHome.onClick.AddListener(() =>
         {
+            LevelManager.Instance.Pool.Pool = new Queue<GameObject>();
+
             foreach (var item in LevelManager.Instance.DicDataLevel)
                 LevelManager.Instance.Pool.ReturnToPool(item.Key, LevelManager.Instance.gameObject);
 
@@ -48,11 +51,13 @@ public class LevelScene : MonoBehaviour
             AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton);
         });
     }
+
     private void SetButtonLevel()
     {
         dic = LevelManager.Instance.DicDataLevel;
 
         foreach (var item in dic.Keys)
+        {
             item.gameObject.transform.SetParent(panelLevel.transform);
         }
 
@@ -69,6 +74,7 @@ public class LevelScene : MonoBehaviour
             item.Key.GetComponent<Button>().onClick.AddListener(() => AudioManager.Instance.PlayAudioClip(EnumAudioClip.ClickedButton));
         }
     }
+
     private void SetActiveButtonLevel()
     {
         int b = 0;
@@ -97,6 +103,7 @@ public class LevelScene : MonoBehaviour
             }
         }
     }
+
     private void SetDataLevel(GameObject btn)
     {
         GameObject.FindGameObjectWithTag(TagName.BUTTON_NEXT_STAGE).GetComponent<Image>().color = new Color(1, 1, 1, 0);
@@ -106,6 +113,7 @@ public class LevelScene : MonoBehaviour
         GameObject.FindGameObjectWithTag(TagName.BUTTON_CANCEL_TO_HOME).GetComponent<Button>().interactable = false;
 
         LevelManager.Instance.DataLevel = btn.GetComponent<ButtonLevel>().Data;
+        LevelManager.Instance.CurrentLevel = LevelManager.Instance.GetListDataLevel.IndexOf(LevelManager.Instance.DataLevel);
 
         UIManager.instance.ShowPanel(EnumPanelType.SelectLevel);
 
@@ -113,6 +121,7 @@ public class LevelScene : MonoBehaviour
         panelSelectLevel.GetComponent<PanelSelectLevel>().TextLevelName = LevelManager.Instance.DataLevel.levelName;
         panelSelectLevel.GetComponent<PanelSelectLevel>().SetImageStar(LevelManager.Instance.DataLevel.levelName);
     }
+
     private bool IsUnlocked(string levelName)
     {
         foreach (var item in LevelManager.Instance.HashSetLevelUnLocked)

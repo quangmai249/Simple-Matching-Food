@@ -37,6 +37,7 @@ public class ObjectPool : IPooledObject
     }
     public Queue<GameObject> Pool
     {
+        set => _pool = value;
         get => _pool;
     }
 }

@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameplayScene.unity
     guid: a346fae189b3a5e4095faa02338f6521
+  - enabled: 1
+    path: Assets/Scenes/OpenNewStageScene.unity
+    guid: 27966cc486f9a6a4491634795f3cc161
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: c9dfb7b96db4caa4783a126aebc819db, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: c847bf30886080c4fb8e4b8a4ccbd7c3, type: 2}
